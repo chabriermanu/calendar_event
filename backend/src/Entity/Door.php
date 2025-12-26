@@ -14,8 +14,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Ignore;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: DoorRepository::class)]
+#[UniqueEntity(
+    fields: ['dayNumber'],
+    message: 'Une porte existe déjà pour le jour {{ value }}'
+)]
 #[ApiResource(
 
     /**
@@ -59,15 +65,31 @@ class Door
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+  
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le numéro du jour est obligatoire")]
+    #[Assert\Range(
+        min: 1,
+        max: 24,
+        notInRangeMessage: "Le jour doit être entre {{ min }} et {{ max }}"
+    )]
+    
     private ?int $dayNumber = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: "Le titre est obligatoire")]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: "Le titre ne peut pas dépasser {{ limit }} caractères"
+    )]
+
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "Le message est obligatoire")]
+
     private ?string $message = null;
 
     #[ORM\Column(length: 255, nullable: true)]

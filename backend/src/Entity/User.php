@@ -12,14 +12,24 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
-
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(
+    fields: ['email'],
+    message: 'Cet email est déjà utilisé'
+)]
+#[UniqueEntity(
+    fields: ['pseudo'],
+    message: 'Ce pseudo est déjà utilisé'
+)]
 #[ApiResource(
 
     /**
@@ -73,10 +83,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['user:read'])]
+   
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
     #[Groups(['user:read', 'user:create'])]
+    #[Assert\NotBlank(message: "L'email est obligatoire")]
+    #[Assert\Email(message: "L'email {{ value }} n'est pas valide")]
     private ?string $email = null;
 
     /**
@@ -90,16 +103,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Groups(['user:create', 'user:write'])]
+        #[Assert\NotBlank(message: "Le mot de passe est obligatoire")]
+    #[Assert\Length(
+        min: 8,
+        minMessage: "Le mot de passe doit faire au moins {{ limit }} caractères"
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
     #[Groups(['user:read', 'user:create', 'user:write'])]
+    #[Assert\NotBlank(message: "Le pseudo est obligatoire")]
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: "Le pseudo doit faire au moins {{ limit }} caractères",
+        maxMessage: "Le pseudo ne peut pas dépasser {{ limit }} caractères"
+    )]
     private ?string $pseudo = null;
 
     /**
      * @var Collection<int, DoorOpening>
      */
     #[ORM\OneToMany(targetEntity: DoorOpening::class, mappedBy: 'owner')]
+    #[Ignore]
     private Collection $doorOpenings;
 
     public function __construct()

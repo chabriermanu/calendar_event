@@ -40,10 +40,13 @@ security:
         # Autoriser GET sur /api/doors (lecture publique)
         - { path: ^/api/doors$, roles: PUBLIC_ACCESS, methods: [GET] }
         - { path: ^/api/doors/\d+$, roles: PUBLIC_ACCESS, methods: [GET] }
+
+        # Autoriser POST sur /api/users (inscription publique)
+        - { path: ^/api/users$, roles: PUBLIC_ACCESS, methods: [POST] }
         
         # Bloquer tout le reste de /api (nécessite authentification)
         - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }
-        
+
             # Activate different ways to authenticate:
             # https://symfony.com/doc/current/security.html#the-firewall
 

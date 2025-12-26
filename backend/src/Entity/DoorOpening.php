@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Repository\DoorOpeningRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DoorOpeningRepository::class)]
 #[ApiResource(
@@ -70,6 +71,11 @@ class DoorOpening
     private ?Door $door = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "La date d'ouverture est obligatoire")]
+    #[Assert\LessThanOrEqual(
+        value: 'today',
+        message: "Vous ne pouvez pas ouvrir une porte dans le futur"
+)]
     private ?\DateTime $openedAt = null;
 
     public function getId(): ?int
