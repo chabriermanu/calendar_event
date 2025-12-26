@@ -1,0 +1,14 @@
+api_platform:
+api_platform:
+    title: 'Calendrier Avent API'
+    version: 1.0.0
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']  
+    openapi:
+        swagger_ui_extra_configuration:
+            persistAuthorization: true
