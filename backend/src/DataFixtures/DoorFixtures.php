@@ -1,5 +1,7 @@
 <?php
 
+// En une commande, on a créé les 24 portes ! ✨
+
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;

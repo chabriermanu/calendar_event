@@ -34,9 +34,14 @@ class UserFixtures extends Fixture
             $hashedPassword = $this->passwordHasher->hashPassword($user, $userData['password']);
             $user->setPassword($hashedPassword);
 
+            // Dit à Doctrine : "Prépare cet objet User pour la sauvegarde"
+            // Mais NE SAUVEGARDE PAS ENCORE en base !
+            // Plus PERFORMANT qu'envoyer 6 requêtes séparées !
             $manager->persist($user);
         }
 
+        // Dit à Doctrine : "Maintenant, SAUVEGARDE TOUT ce qui a été préparé avec persist()"
+        // // UNE SEULE requête SQL pour tout sauvegarder 
         $manager->flush();
     }
 }
