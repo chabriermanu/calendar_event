@@ -23,6 +23,8 @@ Backend API RESTful pour un calendrier de l'Avent familial où chaque membre de 
 - Se connecter avec un code famille partagé
 - Choisir son profil personnalisé
 - Ouvrir les portes du calendrier (1 par jour du 1er au 24 décembre)
+- **Uploader des photos de leurs défis réalisés** 📸
+- **Voir la galerie familiale** avec toutes les photos
 - Bénéficier d'un thème visuel adapté à son âge
 
 **Technologies :**
@@ -46,6 +48,8 @@ User (pas d'email/password individuel)
 Famille (profil avec thème personnalisé)
     ↓
 DoorOpening (historique des portes ouvertes)
+    ↓
+Photo (photos uploadées des défis)
 ```
 
 ### Entités principales
@@ -56,6 +60,7 @@ DoorOpening (historique des portes ouvertes)
 4. **Theme** : Thème graphique (4 types : enfant, ado, parent, grand-parent)
 5. **Door** : Porte du calendrier (24 portes du 1er au 24 décembre)
 6. **DoorOpening** : Enregistrement d'ouverture de porte par user
+7. **Photo** : Photo uploadée pour un défi (galerie familiale) 📸
 
 ---
 
@@ -128,21 +133,11 @@ symfony serve
       "pseudo": "Khyle",
       "avatar": "avatar_khyle.png",
       "age": 4
-    },
-    {
-      "id": 2,
-      "pseudo": "Khelyann",
-      "avatar": "avatar_teen1.png",
-      "age": 16
     }
-    // ... 4 autres profils
+    // ... 5 autres profils
   ]
 }
 ```
-
-**Erreurs :**
-- `400` : Code manquant
-- `404` : Code famille invalide
 
 ---
 
@@ -170,16 +165,11 @@ symfony serve
 }
 ```
 
-**Erreurs :**
-- `400` : Paramètres manquants
-- `403` : User n'appartient pas à cette famille
-- `404` : User non trouvé
-
 ---
 
 #### Utilisation du token
 
-**Pour toutes les routes protégées, ajouter le header :**
+Pour toutes les routes protégées, ajouter le header :
 
 ```
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGc...
@@ -227,7 +217,7 @@ Liste toutes les portes du calendrier.
     "id": 1,
     "dayNumber": 1,
     "title": "1er décembre",
-    "message": "le compte à revours de Noel commence !",
+    "message": "le compte à rebours de Noel commence !",
     "availableDate": "2026-12-01T00:00:00+00:00",
     "imageUrl": null,
     "videoUrl": null,
@@ -332,6 +322,88 @@ Authorization: Bearer TOKEN
 
 ---
 
+#### POST /api/door-openings/{id}/photo 📸
+
+**Nouveau !** Upload une photo pour un défi réalisé.
+
+**Headers :**
+```
+Authorization: Bearer TOKEN
+Content-Type: multipart/form-data
+```
+
+**Body (form-data) :**
+- `photo` (file) : Image JPG/PNG/WEBP (max 5MB)
+- `caption` (text, optionnel) : Légende de la photo
+
+**Réponse (201 Created) :**
+```json
+{
+  "success": true,
+  "photo": {
+    "id": 1,
+    "url": "/uploads/galerie/6956e77c441ee.png",
+    "caption": "Mon beau sapin de Noël !"
+  }
+}
+```
+
+**Règles métier :**
+- ✅ Seul le propriétaire du DoorOpening peut uploader
+- ✅ Formats autorisés : JPG, PNG, WEBP
+- ✅ Fichier stocké dans `/public/uploads/galerie/`
+- ✅ Nom de fichier unique (uniqid)
+
+**Erreurs :**
+- `400` : Aucun fichier reçu ou format non autorisé
+- `403` : Non autorisé (pas le propriétaire)
+- `404` : DoorOpening inexistant
+- `500` : Erreur upload
+
+---
+
+#### GET /api/photos 🖼️
+
+**Nouveau !** Récupère la galerie familiale (toutes les photos de la famille).
+
+**Headers :**
+```
+Authorization: Bearer TOKEN
+```
+
+**Réponse (200 OK) :**
+```json
+[
+  {
+    "id": 1,
+    "url": "/uploads/galerie/6956e77c441ee.png",
+    "caption": "Mon beau sapin de Noël !",
+    "uploadedBy": "Papa",
+    "door": {
+      "dayNumber": 1,
+      "title": "1er décembre"
+    }
+  },
+  {
+    "id": 2,
+    "url": "/uploads/galerie/abc123def456.jpg",
+    "caption": "Bonhomme de neige avec Khyle",
+    "uploadedBy": "Maman",
+    "door": {
+      "dayNumber": 3,
+      "title": "Jour 3"
+    }
+  }
+]
+```
+
+**Règles métier :**
+- ✅ Filtrée par FamilyGroup (pas d'inter-familles)
+- ✅ Triée par date d'upload (DESC)
+- ✅ Inclut le pseudo de l'uploader et la porte associée
+
+---
+
 ## 📊 Modèles de données
 
 ### FamilyGroup
@@ -426,7 +498,8 @@ Authorization: Bearer TOKEN
   "id": int,
   "owner": User,
   "door": Door,
-  "openedAt": DateTime
+  "openedAt": DateTime,
+  "photos": Collection<Photo>  // Photos uploadées
 }
 ```
 
@@ -434,17 +507,35 @@ Authorization: Bearer TOKEN
 
 ---
 
+### Photo 📸
+
+**Nouveau modèle !**
+
+```php
+{
+  "id": int,
+  "filename": string,         // "6956e77c441ee.png"
+  "caption": string|null,     // Légende optionnelle
+  "uploadedAt": DateTime,     // Date d'upload
+  "doorOpening": DoorOpening  // Lien vers le défi
+}
+```
+
+**Relations :**
+- ManyToOne → DoorOpening
+- Fichier physique stocké dans `/public/uploads/galerie/`
+
+---
+
 ## 🧪 Exemples complets
 
-### Scénario 1 : Papa se connecte et ouvre la porte du jour
+### Scénario 1 : Papa ouvre une porte et upload une photo
 
 ```bash
 # 1. Vérifier le code famille
 curl -X POST http://localhost:8000/auth/family \
   -H "Content-Type: application/json" \
   -d '{"code": "NOEL2026"}'
-
-# Réponse : Liste des 6 profils
 
 # 2. Sélectionner Papa (id: 3)
 curl -X POST http://localhost:8000/auth/profile \
@@ -453,27 +544,37 @@ curl -X POST http://localhost:8000/auth/profile \
 
 # Réponse : Token JWT
 
-# 3. Récupérer son profil
-curl -X GET http://localhost:8000/api/me \
-  -H "Authorization: Bearer TOKEN"
-
-# 4. Récupérer son thème
-curl -X GET http://localhost:8000/api/me/famille \
-  -H "Authorization: Bearer TOKEN"
-
-# 5. Ouvrir la porte du jour
+# 3. Ouvrir la porte du jour
 curl -X POST http://localhost:8000/api/doors/1/open \
+  -H "Authorization: Bearer TOKEN"
+
+# Réponse : DoorOpening créé (id: 10)
+
+# 4. Uploader une photo
+curl -X POST http://localhost:8000/api/door-openings/10/photo \
+  -H "Authorization: Bearer TOKEN" \
+  -F "photo=@/path/to/photo.jpg" \
+  -F "caption=Mon premier défi réussi !"
+
+# 5. Voir la galerie familiale
+curl -X GET http://localhost:8000/api/photos \
   -H "Authorization: Bearer TOKEN"
 ```
 
 ---
 
-### Scénario 2 : Khyle (4 ans) ouvre sa porte
+### Scénario 2 : Toute la famille consulte la galerie
 
 ```bash
-# 1. Code famille NOEL2026 → Liste profils
-# 2. Sélectionner Khyle (id: 1, thème: colorful_village)
-# 3. Ouvrir porte → Voir message adapté enfant
+# Khyle se connecte et voit toutes les photos de la famille
+curl -X POST http://localhost:8000/auth/profile \
+  -H "Content-Type: application/json" \
+  -d '{"familyId": 1, "userId": 1}'
+
+curl -X GET http://localhost:8000/api/photos \
+  -H "Authorization: Bearer TOKEN"
+
+# Réponse : Toutes les photos uploadées par Papa, Maman, etc.
 ```
 
 ---
@@ -511,6 +612,21 @@ if (!$this->isGranted('DOOR_OPEN', $door)) {
 
 ---
 
+### Upload sécurisé
+
+**PhotoController** vérifie :
+1. ✅ Utilisateur connecté (JWT)
+2. ✅ Propriétaire du DoorOpening
+3. ✅ Format fichier autorisé (jpg, png, webp)
+4. ✅ Taille max (géré par PHP upload_max_filesize)
+
+**Stockage :**
+- Dossier : `/public/uploads/galerie/`
+- Nom unique : `uniqid() + extension`
+- **Gitignored** (pas de commits de photos)
+
+---
+
 ### Routes protégées
 
 **Configuration** `config/packages/security.yaml` :
@@ -541,12 +657,17 @@ backend/
 │   │   ├── doctrine.yaml
 │   │   ├── lexik_jwt_authentication.yaml
 │   │   └── security.yaml
-│   └── routes.yaml
+│   ├── routes.yaml
+│   └── services.yaml (uploadDir configuré)
 ├── migrations/
+├── public/
+│   └── uploads/
+│       └── galerie/          # Photos uploadées (gitignored)
 ├── src/
 │   ├── Controller/
 │   │   ├── AuthController.php      # Login code famille + profil
 │   │   ├── DoorController.php      # Ouverture portes
+│   │   ├── PhotoController.php     # Upload + galerie 📸
 │   │   ├── ThemesController.php    # Liste thèmes
 │   │   └── UserController.php      # Profil user
 │   ├── DataFixtures/
@@ -556,9 +677,11 @@ backend/
 │   │   ├── DoorOpening.php
 │   │   ├── Famille.php
 │   │   ├── FamilyGroup.php
+│   │   ├── Photo.php               # 📸 Nouveau
 │   │   ├── Theme.php
 │   │   └── User.php
 │   ├── Repository/
+│   │   └── PhotoRepository.php     # 📸 Nouveau
 │   └── Security/
 │       └── Voter/
 │           └── DoorOpeningVoter.php
@@ -582,9 +705,11 @@ backend/
 6. Papy (76 ans, grand_parent, theme: traditionnel)
 
 **Tester avec Postman :**
-1. Import collection (à créer)
-2. Tester le flow complet
-3. Vérifier les erreurs 400/403/404
+1. Authentification (code + profil)
+2. Ouvrir porte
+3. Upload photo
+4. Consulter galerie
+5. Vérifier erreurs (403, 404, 400)
 
 ---
 
@@ -603,13 +728,25 @@ composer install --no-dev --optimize-autoloader
 php bin/console cache:clear
 php bin/console doctrine:migrations:migrate --no-interaction
 
-# 3. (Optionnel) Fixtures production
+# 3. Permissions dossier uploads
+chmod -R 775 public/uploads/
+chown -R www-data:www-data public/uploads/
+
+# 4. (Optionnel) Fixtures production
 php bin/console doctrine:fixtures:load --no-interaction
 ```
 
 ---
 
 ## 📝 Changelog
+
+### Version 2.1.0 (1er janvier 2026)
+- ✨ **Upload photos défis** (POST /api/door-openings/{id}/photo)
+- ✨ **Galerie familiale** (GET /api/photos)
+- ✨ Entité Photo + migration BDD
+- ✨ Stockage sécurisé `/public/uploads/galerie/`
+- ✨ Filtrage par FamilyGroup
+- 🔒 Validation format + propriétaire
 
 ### Version 2.0 (1er janvier 2026)
 - ✨ Nouvelle architecture multi-tenant par famille
@@ -648,7 +785,9 @@ Projet éducatif AFPA - Tous droits réservés
 - **API Platform** : https://api-platform.com/docs/
 - **JWT Bundle** : https://github.com/lexik/LexikJWTAuthenticationBundle
 - **Doctrine** : https://www.doctrine-project.org/
+- **Upload Files Symfony** : https://symfony.com/doc/current/controller/upload_file.html
 
 ---
 
-**Dernière mise à jour : 1er janvier 2026**
+**Dernière mise à jour : 1er janvier 2026 - 22h30**
+**9 endpoints API | 7 entités | Upload photos ✅**

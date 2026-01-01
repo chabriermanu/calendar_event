@@ -9,6 +9,7 @@ erDiagram
     THEME ||--o{ FAMILLE : "est assigné à"
     USER ||--o{ DOOR_OPENING : "ouvre"
     DOOR ||--o{ DOOR_OPENING : "est ouvert par"
+    DOOR_OPENING ||--o{ PHOTO : "a des photos"
 
     FAMILY_GROUP {
         int id PK
@@ -62,6 +63,14 @@ erDiagram
         int owner_id FK
         int door_id FK
         datetime opened_at
+    }
+
+    PHOTO {
+        int id PK
+        string filename
+        text caption
+        datetime uploaded_at
+        int door_opening_id FK
     }
 ```
 
@@ -184,6 +193,29 @@ Door "Jour 1" (id: 1)
   ├── DoorOpening (owner: Papa, openedAt: 2026-12-01 10:30)
   ├── DoorOpening (owner: Khyle, openedAt: 2026-12-01 11:15)
   └── DoorOpening (owner: Mamie, openedAt: 2026-12-01 14:00)
+```
+
+---
+
+### 6️⃣ DoorOpening → Photo (OneToMany) 📸
+
+**Type :** `1:N`  
+**Description :** Un DoorOpening peut avoir plusieurs photos
+
+```sql
+-- Clé étrangère
+photo.door_opening_id → door_opening.id
+```
+
+**Contraintes :**
+- ✅ `NOT NULL`
+- ✅ Cascade on delete (si DoorOpening supprimé → photos supprimées)
+
+**Exemple :**
+```
+DoorOpening "Papa - Jour 3" (id: 5)
+  ├── Photo (filename: abc123.jpg, caption: "Mon sapin")
+  └── Photo (filename: def456.png, caption: "Détail déco")
 ```
 
 ---
@@ -317,6 +349,33 @@ FOREIGN KEY (door_id) REFERENCES door(id) ON DELETE CASCADE
 
 ---
 
+### photo 📸
+
+**Nouvelle table !**
+
+| Colonne           | Type         | Contraintes                      |
+|-------------------|--------------|----------------------------------|
+| id                | INTEGER      | PRIMARY KEY, AUTO_INCREMENT      |
+| filename          | VARCHAR(255) | NOT NULL                         |
+| caption           | TEXT         | NULL                             |
+| uploaded_at       | DATETIME     | NOT NULL                         |
+| door_opening_id   | INTEGER      | NOT NULL, FK → door_opening.id   |
+
+**Index :**
+- `INDEX` sur `door_opening_id`
+- `INDEX` sur `uploaded_at` (pour tri galerie)
+
+**Clés étrangères :**
+```sql
+FOREIGN KEY (door_opening_id) REFERENCES door_opening(id) ON DELETE CASCADE
+```
+
+**Fichier physique :**
+- Stocké dans `/public/uploads/galerie/{filename}`
+- Nom unique généré avec `uniqid()`
+
+---
+
 ## 🎯 Cardinalités résumées
 
 ```
@@ -325,6 +384,7 @@ User (1) ←→ (1) Famille
 Theme (1) ←→ (N) Famille
 User (1) ←→ (N) DoorOpening
 Door (1) ←→ (N) DoorOpening
+DoorOpening (1) ←→ (N) Photo 📸
 ```
 
 ---
@@ -346,6 +406,7 @@ Door (1) ←→ (N) DoorOpening
 2. `famille.owner_id` → Si user supprimé, profil supprimé
 3. `door_opening.owner_id` → Si user supprimé, ouvertures supprimées
 4. `door_opening.door_id` → Si porte supprimée, ouvertures supprimées
+5. `photo.door_opening_id` → Si DoorOpening supprimé, photos supprimées 📸
 
 ---
 
@@ -358,10 +419,12 @@ Door (1) ←→ (N) DoorOpening
 - 4 Themes
 - 24 Doors
 - 0-144 DoorOpenings (selon utilisation)
+- 0-N Photos (selon uploads) 📸
 
 **Taille estimée :**
 - ~1 MB avec données de test
-- ~10 MB avec 1 an d'historique (6 users × 24 portes × 365 jours)
+- ~10 MB avec 1 an d'historique
+- ~50-100 MB avec photos (dépend nombre uploads)
 
 ---
 
@@ -394,6 +457,28 @@ FROM door_opening do
 JOIN "user" u ON do.owner_id = u.id
 JOIN door d ON do.door_id = d.id
 ORDER BY d.day_number, u.pseudo;
+
+-- Nombre de photos par user
+SELECT u.pseudo, COUNT(p.id) as nb_photos
+FROM "user" u
+JOIN door_opening do ON do.owner_id = u.id
+LEFT JOIN photo p ON p.door_opening_id = do.id
+GROUP BY u.id;
+
+-- Galerie familiale complète
+SELECT 
+    p.id,
+    p.filename,
+    p.caption,
+    p.uploaded_at,
+    u.pseudo as uploaded_by,
+    d.day_number,
+    d.title
+FROM photo p
+JOIN door_opening do ON p.door_opening_id = do.id
+JOIN "user" u ON do.owner_id = u.id
+JOIN door d ON do.door_id = d.id
+ORDER BY p.uploaded_at DESC;
 ```
 
 ---
@@ -460,8 +545,45 @@ Table door_opening {
     (owner_id, door_id) [unique]
   }
 }
+
+Table photo {
+  id integer [pk, increment]
+  filename varchar(255) [not null]
+  caption text
+  uploaded_at datetime [not null]
+  door_opening_id integer [not null, ref: > door_opening.id]
+  
+  Indexes {
+    door_opening_id
+    uploaded_at
+  }
+  
+  Note: 'Photos uploadées des défis réalisés, stockées dans /public/uploads/galerie/'
+}
 ```
 
 ---
 
-**Dernière mise à jour : 1er janvier 2026**
+## 📝 Changelog BDD
+
+### Version 2.1.0 (1er janvier 2026)
+- ✨ **Table `photo` ajoutée**
+- ✨ Relation Photo → DoorOpening (ManyToOne)
+- ✨ Index sur `door_opening_id` et `uploaded_at`
+- ✨ CASCADE on delete
+
+### Version 2.0 (1er janvier 2026)
+- ✨ Table `family_group` ajoutée
+- ♻️ Table `user` refactorisée (suppression email/password)
+- ✨ Relation FamilyGroup → User
+- ✨ 6 tables au total
+
+### Version 1.0 (Décembre 2025)
+- ✨ 5 tables initiales
+- ✨ Relations OneToOne, OneToMany, ManyToOne
+- ✨ Contraintes d'intégrité
+
+---
+
+**Dernière mise à jour : 1er janvier 2026 - 22h40**
+**7 tables | 6 relations | Upload photos ✅**

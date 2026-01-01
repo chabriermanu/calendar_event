@@ -17,12 +17,15 @@ class PhotoController extends AbstractController
 {
     #[Route('/api/door-openings/{id}/photo', name: 'api_photo_upload', methods: ['POST'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
+
     public function upload(
+
         int $id,
         Request $request,
         DoorOpeningRepository $doorOpeningRepository,
         EntityManagerInterface $em
     ): JsonResponse {
+        
         $user = $this->getUser();
         $doorOpening = $doorOpeningRepository->find($id);
 
@@ -83,6 +86,7 @@ class PhotoController extends AbstractController
 
     #[Route('/api/photos', name: 'api_photo_list', methods: ['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
+
     public function list(PhotoRepository $photoRepository): JsonResponse
     {
         /** @var \App\Entity\User $user */
