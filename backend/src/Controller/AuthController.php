@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\FamilyGroup;
-use App\Entity\User;
+
 use App\Repository\FamilyGroupRepository;
 use App\Repository\UserRepository;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;

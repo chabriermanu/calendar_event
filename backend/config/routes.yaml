@@ -11,6 +11,16 @@ auth:
     path: /auth
     methods: ["POST"]
 
+auth_family:
+    path: /auth/family
+    controller: App\Controller\AuthController::verifyFamilyCode
+    methods: POST
+
+auth_profile:
+    path: /auth/profile
+    controller: App\Controller\AuthController::selectProfile
+    methods: POST
+
 api_me:
     path: /api/me
     controller: App\Controller\UserController::me
@@ -30,13 +40,12 @@ api_themes:
     path: /api/themes
     controller: App\Controller\ThemesController::index
     methods: GET
-
-auth_family:
-    path: /auth/family
-    controller: App\Controller\AuthController::verifyFamilyCode
+api_photo_upload:
+    path: /api/door-openings/{id}/photo
+    controller: App\Controller\PhotoController::upload
     methods: POST
 
-auth_profile:
-    path: /auth/profile
-    controller: App\Controller\AuthController::selectProfile
-    methods: POST
+api_photo_list:
+    path: /api/photos
+    controller: App\Controller\PhotoController::list
+    methods: GET

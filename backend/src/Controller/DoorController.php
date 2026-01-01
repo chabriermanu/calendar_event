@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Door;
 use App\Entity\DoorOpening;
 use App\Entity\User;
 use App\Repository\DoorRepository;
-use App\Repository\DoorOpeningRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
