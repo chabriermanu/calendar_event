@@ -7,13 +7,76 @@ namespace App\DataFixtures;
 use App\Entity\Door;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use App\Entity\Theme;
+use App\Entity\FamilyGroup;
+use App\Entity\User;
+use App\Entity\Famille;
+
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
+    
     {
+    
+            // ========== THEMES ==========
+        $themes = [
+            [
+                'name' => 'colorful_village',
+                'background' => 'village_colore.jpg',
+                'primary' => '#FF6B6B',
+                'secondary' => '#4ECDC4',
+                'music' => 'jingle_bells.mp3',
+                'video' => null,
+                'description' => 'Village coloré et joyeux pour les enfants'
+            ],
+            [
+                'name' => 'modern_snow',
+                'background' => 'neige_moderne.jpg',
+                'primary' => '#00A8E8',
+                'secondary' => '#FFFFFF',
+                'music' => 'snow_ambient.mp3',
+                'video' => 'snow_falling.mp4',
+                'description' => 'Ambiance moderne et épurée pour les ados'
+            ],
+            [
+                'name' => 'cozy',
+                'background' => 'cheminee.jpg',
+                'primary' => '#8B4513',
+                'secondary' => '#FFA500',
+                'music' => 'home_alone.mp3',
+                'video' => 'fireplace.mp4',
+                'description' => 'Atmosphère chaleureuse et cosy pour les parents'
+            ],
+            [
+                'name' => 'traditionnel',
+                'background' => 'noel_traditionnel.jpg',
+                'primary' => '#C41E3A',
+                'secondary' => '#0F8A5F',
+                'music' => 'silent_night.mp3',
+                'video' => null,
+                'description' => 'Noël traditionnel pour les grands-parents'
+            ]
+        ];
+
+        $themeObjects = []; // Pour stocker les objets Theme
+        foreach ($themes as $themeData) {
+            $theme = new Theme();
+            $theme->setName($themeData['name']);
+            $theme->setBackgroundImage($themeData['background']);
+            $theme->setPrimaryColor($themeData['primary']);
+            $theme->setSecondaryColor($themeData['secondary']);
+            $theme->setMusicUrl($themeData['music']);
+            $theme->setVideoUrl($themeData['video']);
+            $theme->setDescription($themeData['description']);
+            
+            $manager->persist($theme);
+            $themeObjects[$themeData['name']] = $theme; // Stocke pour l'utiliser après
+        }
+
+        // ========== PORTES ========== 
         $doors = [
-            ['day'=>1, 'title'=>'1er décembre', 'message'=> 'le compte à  revours de Noel commence !'],
+            ['day'=>1, 'title'=>'1er décembre', 'message'=> 'le compte à rebours de Noel commence !'],
             ['day' => 2, 'title' => 'Jour 2', 'message' => 'Prends le temps de savourer un chocolat chaud.'],
             ['day' => 3, 'title' => 'Jour 3', 'message' => 'Souris à un inconnu et propage la magie de Noël !'],
             ['day' => 4, 'title' => 'Jour 4', 'message' => 'Écoute ta chanson de Noël préférée.'],
@@ -43,11 +106,93 @@ class AppFixtures extends Fixture
             $door -> setDayNumber($doorData['day']);
             $door -> setTitle($doorData['title']);
             $door -> setMessage($doorData["message"]);
-
+           // date de disponibilité à chaque porte
+            $door->setAvailableDate(new \DateTime('2026-12-' . str_pad($doorData['day'], 2, '0', STR_PAD_LEFT)));
             $manager->persist($door);
 
         }
+        // ========== FAMILY GROUP ==========
+        $familyGroup = new FamilyGroup();
+        $familyGroup->setName('Famille Noël 2026');
+        $familyGroup->setCode('NOEL2026');
+        $familyGroup->setAdminEmail('papa@noel.com');
+        $manager->persist($familyGroup);
 
-        $manager->flush();
+        // ========== USERS + FAMILLE ==========
+        $familyMembers = [
+            [
+                'pseudo' => 'Khyle',
+                'age' => 4,
+                'role' => 'enfant',
+                'avatar' => 'avatar_khyle.png',
+                'theme' => 'colorful_village',
+                'roles' => ['ROLE_USER']
+            ],
+            [
+                'pseudo' => 'Khelyann',
+                'age' => 16,
+                'role' => 'ado',
+                'avatar' => 'avatar_teen1.png',
+                'theme' => 'modern_snow',
+                'roles' => ['ROLE_USER']
+            ],
+            [
+                'pseudo' => 'Papa',
+                'age' => 45,
+                'role' => 'parent',
+                'avatar' => 'avatar_papa.png',
+                'theme' => 'cozy',
+                'roles' => ['ROLE_USER', 'ROLE_ADMIN']
+            ],
+            [
+                'pseudo' => 'Maman',
+                'age' => 42,
+                'role' => 'parent',
+                'avatar' => 'avatar_maman.png',
+                'theme' => 'cozy',
+                'roles' => ['ROLE_USER']
+            ],
+            [
+                'pseudo' => 'Mamie',
+                'age' => 74,
+                'role' => 'grand_parent',
+                'avatar' => 'avatar_grandparents.png',
+                'theme' => 'traditionnel',
+                'roles' => ['ROLE_USER']
+            ],
+            [
+                'pseudo' => 'Papy',
+                'age' => 76,
+                'role' => 'grand_parent',
+                'avatar' => 'avatar_grandparents.png',
+                'theme' => 'traditionnel',
+                'roles' => ['ROLE_USER']
+            ],
+        ];
+
+        foreach ($familyMembers as $memberData) {
+            // Créer le User
+            $user = new User();
+            $user->setPseudo($memberData['pseudo']);
+            $user->setAge($memberData['age']);
+            $user->setAvatar($memberData['avatar']);
+            $user->setRoles($memberData['roles']);
+            $user->setFamilyGroup($familyGroup);
+            
+            $manager->persist($user);
+            
+            // Créer le profil Famille
+            $famille = new Famille();
+            $famille->setOwner($user);
+            $famille->setTheme($themeObjects[$memberData['theme']]);
+            $famille->setAvatar($memberData['avatar']);
+            $famille->setFamilyRole($memberData['role']);
+            $famille->setHasCalendarAccess(true);
+            
+            $manager->persist($famille);
+        }
+
+
+         $manager->flush();
     }
 }

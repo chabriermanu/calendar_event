@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Famille;
+use App\Entity\FamilyGroup;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -14,101 +16,48 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[UniqueEntity(
-    fields: ['email'],
-    message: 'Cet email est déjà utilisé'
-)]
 #[UniqueEntity(
     fields: ['pseudo'],
     message: 'Ce pseudo est déjà utilisé'
 )]
 #[ApiResource(
-
-    /**
-     * Définition des opérations CRUD disponibles pour la ressource User.
-     * Chaque opération peut avoir sa propre sécurité et ses groupes de sérialisation.
-     * 
-     * - normalizationContext : quels champs sont LUS (entity -> JSON)
-     * - denormalizationContext : quels champs sont ÉCRITS (JSON -> entity)
-     * - security : expression pour définir qui peut accéder à l'opération
-     */
-
     operations: [
-
-        // POST /api/users - Inscription publique (tout le monde peut s'inscrire)
         new Post( 
             denormalizationContext:['groups'=>['user:create']]
         ), 
-
-        // GET /api/users - Liste des users (ADMIN uniquement)
         new GetCollection(
             security: "is_granted('ROLE_ADMIN')"
         ),
-
-        // GET /api/users/{id} - Voir un user (lui-même OU admin)
-        new Get( // Récupérer ses propres infos
-
+        new Get(
             security : "is_granted('ROLE_ADMIN') or object == user",
-             // "Autorisé SI admin OU SI le User qu'on consulte EST l'utilisateur connecté"
-
             normalizationContext : ['groups' => ['user:read']]
         ),
-        
-        // PUT /api/users/{id} - Modifier un user (lui-même OU admin)
         new Put(
-
             security : "is_granted('ROLE_ADMIN') or object == user",
-             // "Autorisé SI admin OU SI le User qu'on consulte EST l'utilisateur connecté"
-
             denormalizationContext : ['groups' => ['user:write']]
         ),
-
-        // DELETE /api/users/{id} - Supprimer un user (ADMIN uniquement)
         new Delete(
             security :"is_granted('ROLE_ADMIN')"
         )
     ]
 )]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['user:read'])]
-   
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
-    #[Groups(['user:read', 'user:create'])]
-    #[Assert\NotBlank(message: "L'email est obligatoire")]
-    #[Assert\Email(message: "L'email {{ value }} n'est pas valide")]
-    private ?string $email = null;
-
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
-    private array $roles = [];
-
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
-    #[Groups(['user:create', 'user:write'])]
-        #[Assert\NotBlank(message: "Le mot de passe est obligatoire")]
-    #[Assert\Length(
-        min: 8,
-        minMessage: "Le mot de passe doit faire au moins {{ limit }} caractères"
-    )]
-    private ?string $password = null;
+    #[ORM\ManyToOne(targetEntity: FamilyGroup::class, inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?FamilyGroup $familyGroup = null;
 
     #[ORM\Column(length: 50)]
     #[Groups(['user:read', 'user:create', 'user:write'])]
@@ -121,12 +70,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $pseudo = null;
 
+    #[ORM\Column]
+    private array $roles = [];
+
+    #[ORM\Column]
+    #[Assert\NotBlank(message: "L'âge est obligatoire")]
+    #[Assert\Range(min: 1, max: 120)]
+    private ?int $age = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $avatar = null;
+
     /**
      * @var Collection<int, DoorOpening>
      */
     #[ORM\OneToMany(targetEntity: DoorOpening::class, mappedBy: 'owner')]
     #[Ignore]
     private Collection $doorOpenings;
+
+    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
+    private ?Famille $famille = null;
 
     public function __construct()
     {
@@ -138,80 +101,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->pseudo;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
 
-    /**
-     * @param list<string> $roles
-     */
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
-
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
-     */
-    public function __serialize(): array
-    {
-        $data = (array) $this;
-        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
-
-        return $data;
-    }
-
-    #[\Deprecated]
     public function eraseCredentials(): void
     {
-        // @deprecated, to be removed when upgrading to Symfony 8
+        // Nothing to erase
+    }
+
+    public function getFamilyGroup(): ?FamilyGroup
+    {
+        return $this->familyGroup;
+    }
+
+    public function setFamilyGroup(?FamilyGroup $familyGroup): static
+    {
+        $this->familyGroup = $familyGroup;
+        return $this;
     }
 
     public function getPseudo(): ?string
@@ -222,7 +143,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudo(string $pseudo): static
     {
         $this->pseudo = $pseudo;
+        return $this;
+    }
 
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): static
+    {
+        $this->age = $age;
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): static
+    {
+        $this->avatar = $avatar;
         return $this;
     }
 
@@ -240,19 +182,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->doorOpenings->add($doorOpening);
             $doorOpening->setOwner($this);
         }
-
         return $this;
     }
 
     public function removeDoorOpening(DoorOpening $doorOpening): static
     {
         if ($this->doorOpenings->removeElement($doorOpening)) {
-            // set the owning side to null (unless already changed)
             if ($doorOpening->getOwner() === $this) {
                 $doorOpening->setOwner(null);
             }
         }
+        return $this;
+    }
 
+    public function getFamille(): ?Famille
+    {
+        return $this->famille;
+    }
+
+    public function setFamille(?Famille $famille): static
+    {
+        if ($famille === null && $this->famille !== null) {
+            $this->famille->setOwner(null);
+        }
+
+        if ($famille !== null && $famille->getOwner() !== $this) {
+            $famille->setOwner($this);
+        }
+
+        $this->famille = $famille;
         return $this;
     }
 }

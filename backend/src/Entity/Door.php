@@ -108,6 +108,9 @@ class Door
     #[Ignore]
     private Collection $doorOpenings;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTime $availableDate = null;
+
     public function __construct()
     {
         $this->doorOpenings = new ArrayCollection();
@@ -216,6 +219,18 @@ class Door
                 $doorOpening->setDoor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvailableDate(): ?\DateTime
+    {
+        return $this->availableDate;
+    }
+
+    public function setAvailableDate(?\DateTime $availableDate): static
+    {
+        $this->availableDate = $availableDate;
 
         return $this;
     }

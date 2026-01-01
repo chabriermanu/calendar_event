@@ -11,3 +11,32 @@ auth:
     path: /auth
     methods: ["POST"]
 
+api_me:
+    path: /api/me
+    controller: App\Controller\UserController::me
+    methods: GET
+
+api_me_famille:
+    path: /api/me/famille
+    controller: App\Controller\UserController::meFamille
+    methods: GET
+
+api_door_open:
+    path: /api/doors/{id}/open
+    controller: App\Controller\DoorController::open
+    methods: POST
+
+api_themes:
+    path: /api/themes
+    controller: App\Controller\ThemesController::index
+    methods: GET
+
+auth_family:
+    path: /auth/family
+    controller: App\Controller\AuthController::verifyFamilyCode
+    methods: POST
+
+auth_profile:
+    path: /auth/profile
+    controller: App\Controller\AuthController::selectProfile
+    methods: POST
