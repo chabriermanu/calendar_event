@@ -1,57 +1,73 @@
-🎄 Calendrier de l'Avent 2026 - Projet Complet
+# 🎄 Calendrier de l'Avent 2026 - Projet Complet
+
 Calendrier de l'Avent familial interactif avec backend Symfony, base PostgreSQL et frontend React.
 
-📊 État d'avancement
-ComposantStatutAvancementBackend API (Symfony)✅ Terminé100%Base de données (PostgreSQL)✅ Terminée100%Maquettes mobile (Figma)✅ Terminées100%Maquettes desktop (Figma)✅ Terminées100%Frontend React⏳ En attente0%
-Dernière mise à jour : 3 janvier 2026
-Prochaine étape : Développement frontend React
+---
 
-📋 Table des matières
+## 📊 État d'avancement
 
-Présentation
-Architecture
-Maquettes Figma
-Backend - Installation
-Backend - Authentification
-Backend - Endpoints API
-Backend - Modèles de données
-Backend - Exemples
-Backend - Sécurité
+| Composant | Statut | Avancement |
+|-----------|--------|------------|
+| **Backend API (Symfony)** | ✅ Terminé | 100% |
+| **Base de données (PostgreSQL)** | ✅ Terminée | 100% |
+| **Maquettes mobile (Figma)** | ✅ Terminées | 100% |
+| **Maquettes desktop (Figma)** | ✅ Terminées | 100% |
+| **Frontend React** | ⏳ En attente | 0% |
 
+**Dernière mise à jour :** 3 janvier 2026  
+**Prochaine étape :** Développement frontend React
 
-🎯 Présentation
+---
+
+## 📋 Table des matières
+
+- [Présentation](#présentation)
+- [Architecture](#architecture)
+- [Maquettes Figma](#maquettes-figma)
+- [Backend - Installation](#installation)
+- [Backend - Authentification](#authentification)
+- [Backend - Endpoints API](#endpoints-api)
+- [Backend - Modèles de données](#modèles-de-données)
+- [Backend - Exemples](#exemples)
+- [Backend - Sécurité](#sécurité)
+
+---
+
+## 🎯 Présentation
+
 Calendrier de l'Avent familial où chaque membre de la famille peut :
+- Se connecter avec un code famille partagé
+- Choisir son profil personnalisé
+- Ouvrir les portes du calendrier (1 par jour du 1er au 24 décembre)
+- **Uploader des photos de leurs défis réalisés** 📸
+- **Voir la galerie familiale** avec toutes les photos
+- Bénéficier d'un thème visuel adapté à son âge
 
-Se connecter avec un code famille partagé
-Choisir son profil personnalisé
-Ouvrir les portes du calendrier (1 par jour du 1er au 24 décembre)
-Uploader des photos de leurs défis réalisés 📸
-Voir la galerie familiale avec toutes les photos
-Bénéficier d'un thème visuel adapté à son âge
+**Stack technique :**
 
-Stack technique :
-Backend :
+**Backend :**
+- Symfony 7.4
+- PostgreSQL
+- JWT (Lexik Bundle)
+- API Platform
+- Doctrine ORM
 
-Symfony 7.4
-PostgreSQL
-JWT (Lexik Bundle)
-API Platform
-Doctrine ORM
+**Frontend (à développer) :**
+- React
+- Axios (API calls)
+- React Router
+- CSS Modules / Tailwind
 
-Frontend (à développer) :
+**Design :**
+- Figma (maquettes mobile & desktop complètes)
 
-React
-Axios (API calls)
-React Router
-CSS Modules / Tailwind
+---
 
-Design :
+## 🏗️ Architecture
 
-Figma (maquettes mobile & desktop complètes)
+### Modèle multi-tenant par famille
 
-
-🏗️ Architecture
-Modèle multi-tenant par famille
+```
 FamilyGroup (code famille partagé: NOEL2026)
     ↓
 User (pas d'email/password individuel)
@@ -61,81 +77,78 @@ Famille (profil avec thème personnalisé)
 DoorOpening (historique des portes ouvertes)
     ↓
 Photo (photos uploadées des défis)
-Entités principales
+```
 
-FamilyGroup : Représente une famille (1 code partagé)
-User : Membre de la famille (authentification par sélection de profil)
-Famille : Profil utilisateur avec thème visuel
-Theme : Thème graphique (4 types : enfant, ado, parent, grand-parent)
-Door : Porte du calendrier (24 portes du 1er au 24 décembre)
-DoorOpening : Enregistrement d'ouverture de porte par user
-Photo : Photo uploadée pour un défi (galerie familiale) 📸
+### Entités principales
 
+1. **FamilyGroup** : Représente une famille (1 code partagé)
+2. **User** : Membre de la famille (authentification par sélection de profil)
+3. **Famille** : Profil utilisateur avec thème visuel
+4. **Theme** : Thème graphique (4 types : enfant, ado, parent, grand-parent)
+5. **Door** : Porte du calendrier (24 portes du 1er au 24 décembre)
+6. **DoorOpening** : Enregistrement d'ouverture de porte par user
+7. **Photo** : Photo uploadée pour un défi (galerie familiale) 📸
 
-🎨 Maquettes Figma
-✅ Maquettes Mobile (Terminées)
-Écrans réalisés :
+---
 
-Page de connexion (code famille + sélection profil)
-Calendrier adaptatif avec portes aléatoires
-Détail d'une porte ouverte
-Galerie photos familiale
-Page profil utilisateur
+## 🎨 Maquettes Figma
 
-Caractéristiques :
+### ✅ Maquettes Mobile (Terminées - 9 wireframes)
 
-Responsive 375px (mobile standard)
-4 thèmes différents selon l'âge
-Animations de portes
-Upload photo intégré
+**Écrans réalisés :**
+1. **Écran 0 - Accueil** : Page d'accueil responsive
+2. **Écran 1 - Authentification** : Formulaire code famille
+3. **Écran 1a - Inscription** : Création famille
+4. **Écran 2 - Sélection profils** : 6 profils en grille
+5. **Écran 3 - Calendrier** : 24 portes adaptées mobile
+6. **Écran 4 - Défis** : Détail porte/défi
+7. **Écran 5 - Profil** : Page profil utilisateur
+8. **Écran 6 - Ajouter membre** : Formulaire ajout profil
+9. **Écran 7 - Galerie** : Galerie photos familiale
 
-✅ Maquettes Desktop (Terminées)
-Écrans réalisés :
+**Caractéristiques :**
+- Responsive 375px (mobile standard)
+- 4 thèmes différents selon l'âge
+- Animations de portes
+- Upload photo intégré
 
-Page de connexion Netflix-style avec :
+### ✅ Maquettes Desktop (Terminées - 9 écrans)
 
-6 avatars de profil cliquables
-Vidéo de fond (neige/cheminée)
-Musique nostalgique de Noël
+**Écrans réalisés :**
+1. **Écran 0 - Accueil** : Page d'accueil avec 2 boutons (Créer/Se connecter)
+2. **Écran 1 - Authentification** : Formulaire code famille
+3. **Écran 1a - Inscription** : Création famille complète (nom, code, email, premier profil admin)
+4. **Écran 2 - Sélection profils** : Netflix-style avec 6 avatars, vidéo fond, musique
+5. **Écran 3 - Calendrier** : 24 portes avec thème personnalisé (ex: cheminée cosy pour Mamie)
+6. **Écran 4 - Défis** : Détail porte avec lutin, message, vidéo tuto, upload photo
+7. **Écran 5 - Profil** : Stats réalisations (3/24 défis, 12.5%), mes photos, RGPD
+8. **Écran 6 - Ajouter membre** : Formulaire ajout nouveau profil à la famille
+9. **Écran 7 - Galerie** : Layout masonry, filtres par membre/jour, attribution photos
 
+**Thèmes personnalisés par profil :**
+- **Khyle (4 ans)** : Village coloré et joyeux
+- **Khelyann (16 ans)** : Neige moderne et épurée
+- **Papa/Maman** : Cheminée cosy et chaleureuse
+- **Mamie/Papy** : Traditionnel et nostalgique
 
-Calendrier de l'Avent avec :
+**Lien Figma :** *(à ajouter)*
 
-24 portes de tailles aléatoires (Math.random())
-Fond de Noël personnalisé par profil
-Positionnement dynamique des portes
+---
 
+## 💻 Installation
 
-Galerie photos avec :
+### Prérequis
 
-Layout masonry (grille adaptative)
-Filtres par membre de la famille
-Lightbox pour affichage plein écran
+- PHP 8.2+
+- Composer
+- PostgreSQL 14+
+- Symfony CLI
+- Node.js 18+ (pour le frontend)
 
+### Installation Backend
 
-Formulaire d'inscription famille
-Gestion des profils
-
-Thèmes personnalisés par profil :
-
-Khyle (4 ans) : Village coloré et joyeux
-Khelyann (16 ans) : Neige moderne et épurée
-Papa/Maman : Cheminée cosy et chaleureuse
-Mamie/Papy : Traditionnel et nostalgique
-
-Lien Figma : (à ajouter)
-
-💻 Installation
-Prérequis
-
-PHP 8.2+
-Composer
-PostgreSQL 14+
-Symfony CLI
-Node.js 18+ (pour le frontend)
-
-Installation Backend
-bash# 1. Clone le projet
+```bash
+# 1. Clone le projet
 git clone https://github.com/chabriermanu/calendar_event.git
 cd calendar_event/backend
 
@@ -160,23 +173,39 @@ php bin/console doctrine:fixtures:load
 
 # 8. Démarre le serveur
 symfony serve
-API disponible sur : http://localhost:8000
-Installation Frontend (à venir)
-bash# À définir lors du développement React
+```
+
+**API disponible sur :** `http://localhost:8000`
+
+### Installation Frontend (à venir)
+
+```bash
+# À définir lors du développement React
 cd frontend
 npm install
 npm run dev
+```
 
-🔐 Authentification
-Flow d'authentification en 2 étapes
-Étape 1 : Vérifier le code famille
-Endpoint : POST /auth/family
-Body :
-json{
+---
+
+## 🔐 Authentification
+
+### Flow d'authentification en 2 étapes
+
+#### Étape 1 : Vérifier le code famille
+
+**Endpoint :** `POST /auth/family`
+
+**Body :**
+```json
+{
   "code": "NOEL2026"
 }
-Réponse (200 OK) :
-json{
+```
+
+**Réponse (200 OK) :**
+```json
+{
   "familyId": 1,
   "familyName": "Famille Noël 2026",
   "users": [
@@ -189,16 +218,25 @@ json{
     // ... 5 autres profils
   ]
 }
+```
 
-Étape 2 : Sélectionner un profil
-Endpoint : POST /auth/profile
-Body :
-json{
+---
+
+#### Étape 2 : Sélectionner un profil
+
+**Endpoint :** `POST /auth/profile`
+
+**Body :**
+```json
+{
   "familyId": 1,
   "userId": 3
 }
-Réponse (200 OK) :
-json{
+```
+
+**Réponse (200 OK) :**
+```json
+{
   "token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
   "user": {
     "id": 3,
@@ -206,18 +244,33 @@ json{
     "roles": ["ROLE_USER", "ROLE_ADMIN"]
   }
 }
+```
 
-Utilisation du token
+---
+
+#### Utilisation du token
+
 Pour toutes les routes protégées, ajouter le header :
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGc...
-Durée de validité : 1 heure
 
-🌐 Endpoints API
-🔓 Routes publiques
-GET /api/themes
+```
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGc...
+```
+
+**Durée de validité :** 1 heure
+
+---
+
+## 🌐 Endpoints API
+
+### 🔓 Routes publiques
+
+#### GET /api/themes
+
 Liste tous les thèmes disponibles.
-Réponse (200 OK) :
-json[
+
+**Réponse (200 OK) :**
+```json
+[
   {
     "id": 1,
     "name": "colorful_village",
@@ -230,11 +283,17 @@ json[
   }
   // ... 3 autres thèmes
 ]
+```
 
-GET /api/doors
+---
+
+#### GET /api/doors
+
 Liste toutes les portes du calendrier.
-Réponse (200 OK) :
-json[
+
+**Réponse (200 OK) :**
+```json
+[
   {
     "id": 1,
     "dayNumber": 1,
@@ -247,27 +306,46 @@ json[
   }
   // ... 23 autres portes
 ]
+```
 
-🔒 Routes authentifiées
-GET /api/me
+---
+
+### 🔒 Routes authentifiées
+
+#### GET /api/me
+
 Récupère le profil de l'utilisateur connecté.
-Headers :
+
+**Headers :**
+```
 Authorization: Bearer TOKEN
-Réponse (200 OK) :
-json{
+```
+
+**Réponse (200 OK) :**
+```json
+{
   "id": 3,
   "pseudo": "Papa",
   "age": 45,
   "avatar": "avatar_papa.png",
   "roles": ["ROLE_USER", "ROLE_ADMIN"]
 }
+```
 
-GET /api/me/famille
+---
+
+#### GET /api/me/famille
+
 Récupère le profil famille avec le thème associé.
-Headers :
+
+**Headers :**
+```
 Authorization: Bearer TOKEN
-Réponse (200 OK) :
-json{
+```
+
+**Réponse (200 OK) :**
+```json
+{
   "id": 3,
   "avatar": "avatar_papa.png",
   "familyRole": "parent",
@@ -283,13 +361,22 @@ json{
     "description": "Atmosphère chaleureuse et cosy pour les parents"
   }
 }
+```
 
-POST /api/doors/{id}/open
+---
+
+#### POST /api/doors/{id}/open
+
 Ouvre une porte du calendrier.
-Headers :
+
+**Headers :**
+```
 Authorization: Bearer TOKEN
-Réponse (201 Created) :
-json{
+```
+
+**Réponse (201 Created) :**
+```json
+{
   "success": true,
   "door": {
     "id": 1,
@@ -302,31 +389,37 @@ json{
   },
   "openedAt": "2026-12-01T10:30:00+00:00"
 }
-Règles métier :
+```
 
-✅ Une porte ne peut être ouverte qu'à partir de sa date de disponibilité
-✅ Un utilisateur ne peut ouvrir une porte qu'une seule fois
-✅ Les vérifications sont gérées par un Voter Symfony
+**Règles métier :**
+- ✅ Une porte ne peut être ouverte qu'à partir de sa date de disponibilité
+- ✅ Un utilisateur ne peut ouvrir une porte qu'une seule fois
+- ✅ Les vérifications sont gérées par un Voter Symfony
 
-Erreurs :
+**Erreurs :**
+- `400` : Porte déjà ouverte par cet utilisateur
+- `403` : Porte pas encore disponible (date future)
+- `404` : Porte inexistante
 
-400 : Porte déjà ouverte par cet utilisateur
-403 : Porte pas encore disponible (date future)
-404 : Porte inexistante
+---
 
+#### POST /api/door-openings/{id}/photo 📸
 
-POST /api/door-openings/{id}/photo 📸
 Upload une photo pour un défi réalisé.
-Headers :
+
+**Headers :**
+```
 Authorization: Bearer TOKEN
 Content-Type: multipart/form-data
-Body (form-data) :
+```
 
-photo (file) : Image JPG/PNG/WEBP (max 5MB)
-caption (text, optionnel) : Légende de la photo
+**Body (form-data) :**
+- `photo` (file) : Image JPG/PNG/WEBP (max 5MB)
+- `caption` (text, optionnel) : Légende de la photo
 
-Réponse (201 Created) :
-json{
+**Réponse (201 Created) :**
+```json
+{
   "success": true,
   "photo": {
     "id": 1,
@@ -334,27 +427,34 @@ json{
     "caption": "Mon beau sapin de Noël !"
   }
 }
-Règles métier :
+```
 
-✅ Seul le propriétaire du DoorOpening peut uploader
-✅ Formats autorisés : JPG, PNG, WEBP
-✅ Fichier stocké dans /public/uploads/galerie/
-✅ Nom de fichier unique (uniqid)
+**Règles métier :**
+- ✅ Seul le propriétaire du DoorOpening peut uploader
+- ✅ Formats autorisés : JPG, PNG, WEBP
+- ✅ Fichier stocké dans `/public/uploads/galerie/`
+- ✅ Nom de fichier unique (uniqid)
 
-Erreurs :
+**Erreurs :**
+- `400` : Aucun fichier reçu ou format non autorisé
+- `403` : Non autorisé (pas le propriétaire)
+- `404` : DoorOpening inexistant
+- `500` : Erreur upload
 
-400 : Aucun fichier reçu ou format non autorisé
-403 : Non autorisé (pas le propriétaire)
-404 : DoorOpening inexistant
-500 : Erreur upload
+---
 
+#### GET /api/photos 🖼️
 
-GET /api/photos 🖼️
 Récupère la galerie familiale (toutes les photos de la famille).
-Headers :
+
+**Headers :**
+```
 Authorization: Bearer TOKEN
-Réponse (200 OK) :
-json{
+```
+
+**Réponse (200 OK) :**
+```json
+{
   "photos": [
     {
       "id": 1,
@@ -371,25 +471,36 @@ json{
     // ... autres photos de la famille
   ]
 }
-Règles métier :
+```
 
-✅ Filtre automatique par FamilyGroup (sécurité)
-✅ Photos triées par date (plus récentes en premier)
-✅ Inclut infos uploader + porte associée
+**Règles métier :**
+- ✅ Filtre automatique par FamilyGroup (sécurité)
+- ✅ Photos triées par date (plus récentes en premier)
+- ✅ Inclut infos uploader + porte associée
 
+---
 
-📊 Modèles de données
-FamilyGroup
-php{
+## 📊 Modèles de données
+
+### FamilyGroup
+
+```php
+{
   "id": int,
   "code": string,              // "NOEL2026" (unique)
   "name": string,              // "Famille Noël 2026"
   "users": Collection<User>
 }
-Contrainte : Le code famille est unique et partagé par tous les membres.
+```
 
-User
-php{
+**Contrainte :** Le code famille est unique et partagé par tous les membres.
+
+---
+
+### User
+
+```php
+{
   "id": int,
   "pseudo": string,         // "Papa"
   "age": int,              // 45
@@ -397,10 +508,16 @@ php{
   "roles": array,          // ["ROLE_USER", "ROLE_ADMIN"]
   "familyGroup": FamilyGroup
 }
-Note : Pas de email/password individuel. L'authentification se fait par code famille.
+```
 
-Famille
-php{
+**Note :** Pas de email/password individuel. L'authentification se fait par code famille.
+
+---
+
+### Famille
+
+```php
+{
   "id": int,
   "avatar": string,
   "familyRole": string,        // "parent", "enfant", "ado", "grand_parent"
@@ -408,9 +525,14 @@ php{
   "owner": User,
   "theme": Theme
 }
+```
 
-Theme
-php{
+---
+
+### Theme
+
+```php
+{
   "id": int,
   "name": string,              // "cozy", "colorful_village", etc.
   "backgroundImage": string,   // "cheminee.jpg"
@@ -420,16 +542,20 @@ php{
   "videoUrl": string|null,     // "fireplace.mp4"
   "description": string
 }
-4 thèmes disponibles :
+```
 
-colorful_village - Enfants (4-10 ans)
-modern_snow - Ados (11-17 ans)
-cozy - Parents (18-60 ans)
-traditionnel - Grands-parents (60+ ans)
+**4 thèmes disponibles :**
+1. `colorful_village` - Enfants (4-10 ans)
+2. `modern_snow` - Ados (11-17 ans)
+3. `cozy` - Parents (18-60 ans)
+4. `traditionnel` - Grands-parents (60+ ans)
 
+---
 
-Door
-php{
+### Door
+
+```php
+{
   "id": int,
   "dayNumber": int,           // 1-24
   "title": string,            // "1er décembre"
@@ -439,34 +565,50 @@ php{
   "videoUrl": string|null,
   "musicUrl": string|null
 }
+```
 
-DoorOpening
-php{
+---
+
+### DoorOpening
+
+```php
+{
   "id": int,
   "owner": User,
   "door": Door,
   "openedAt": DateTime,
   "photos": Collection<Photo>  // Photos uploadées
 }
-Contrainte : Un User ne peut ouvrir une Door qu'une seule fois (unique: owner + door).
+```
 
-Photo 📸
-php{
+**Contrainte :** Un User ne peut ouvrir une Door qu'une seule fois (unique: owner + door).
+
+---
+
+### Photo 📸
+
+```php
+{
   "id": int,
   "filename": string,         // "6956e77c441ee.png"
   "caption": string|null,     // Légende optionnelle
   "uploadedAt": DateTime,     // Date d'upload
   "doorOpening": DoorOpening  // Lien vers le défi
 }
-Relations :
+```
 
-ManyToOne → DoorOpening
-Fichier physique stocké dans /public/uploads/galerie/
+**Relations :**
+- ManyToOne → DoorOpening
+- Fichier physique stocké dans `/public/uploads/galerie/`
 
+---
 
-🧪 Exemples complets
-Scénario 1 : Papa ouvre une porte et upload une photo
-bash# 1. Vérifier le code famille
+## 🧪 Exemples complets
+
+### Scénario 1 : Papa ouvre une porte et upload une photo
+
+```bash
+# 1. Vérifier le code famille
 curl -X POST http://localhost:8000/auth/family \
   -H "Content-Type: application/json" \
   -d '{"code": "NOEL2026"}'
@@ -493,9 +635,14 @@ curl -X POST http://localhost:8000/api/door-openings/10/photo \
 # 5. Voir la galerie familiale
 curl -X GET http://localhost:8000/api/photos \
   -H "Authorization: Bearer TOKEN"
+```
 
-Scénario 2 : Toute la famille consulte la galerie
-bash# Khyle se connecte et voit toutes les photos de la famille
+---
+
+### Scénario 2 : Toute la famille consulte la galerie
+
+```bash
+# Khyle se connecte et voit toutes les photos de la famille
 curl -X POST http://localhost:8000/auth/profile \
   -H "Content-Type: application/json" \
   -d '{"familyId": 1, "userId": 1}'
@@ -504,62 +651,82 @@ curl -X GET http://localhost:8000/api/photos \
   -H "Authorization: Bearer TOKEN"
 
 # Réponse : Toutes les photos uploadées par Papa, Maman, etc.
+```
 
-🔒 Sécurité
-JWT (JSON Web Token)
+---
 
-Algorithme : RS256 (clés RSA publique/privée)
-Durée : 1 heure
-Contenu token :
+## 🔒 Sécurité
 
-json  {
+### JWT (JSON Web Token)
+
+- **Algorithme :** RS256 (clés RSA publique/privée)
+- **Durée :** 1 heure
+- **Contenu token :**
+  ```json
+  {
     "iat": 1767278895,
     "exp": 1767282495,
     "roles": ["ROLE_USER", "ROLE_ADMIN"],
     "username": "Papa"
   }
+  ```
 
-Voter Symfony
-DoorOpeningVoter vérifie :
+---
 
-✅ Porte disponible (date >= aujourd'hui)
-✅ Pas de doublon (user n'a pas déjà ouvert cette porte)
+### Voter Symfony
 
-Usage :
-phpif (!$this->isGranted('DOOR_OPEN', $door)) {
+**DoorOpeningVoter** vérifie :
+1. ✅ Porte disponible (date >= aujourd'hui)
+2. ✅ Pas de doublon (user n'a pas déjà ouvert cette porte)
+
+**Usage :**
+```php
+if (!$this->isGranted('DOOR_OPEN', $door)) {
     return $this->json(['error' => 'Non autorisé'], 403);
 }
+```
 
-Upload sécurisé
-PhotoController vérifie :
+---
 
-✅ Utilisateur connecté (JWT)
-✅ Propriétaire du DoorOpening
-✅ Format fichier autorisé (jpg, png, webp)
-✅ Taille max (géré par PHP upload_max_filesize)
+### Upload sécurisé
 
-Stockage :
+**PhotoController** vérifie :
+1. ✅ Utilisateur connecté (JWT)
+2. ✅ Propriétaire du DoorOpening
+3. ✅ Format fichier autorisé (jpg, png, webp)
+4. ✅ Taille max (géré par PHP upload_max_filesize)
 
-Dossier : /public/uploads/galerie/
-Nom unique : uniqid() + extension
-Gitignored (pas de commits de photos)
+**Stockage :**
+- Dossier : `/public/uploads/galerie/`
+- Nom unique : `uniqid() + extension`
+- **Gitignored** (pas de commits de photos)
 
+---
 
-Routes protégées
-Configuration config/packages/security.yaml :
-yamlaccess_control:
+### Routes protégées
+
+**Configuration** `config/packages/security.yaml` :
+
+```yaml
+access_control:
     - { path: ^/auth, roles: PUBLIC_ACCESS }
     - { path: ^/api/themes, roles: PUBLIC_ACCESS }
     - { path: ^/api/doors$, roles: PUBLIC_ACCESS, methods: [GET] }
     - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+```
 
-Rôles
+---
 
-ROLE_USER : Tous les membres de la famille
-ROLE_ADMIN : Administrateur famille (Papa)
+### Rôles
 
+- **ROLE_USER** : Tous les membres de la famille
+- **ROLE_ADMIN** : Administrateur famille (Papa)
 
-📁 Structure du projet
+---
+
+## 📁 Structure du projet
+
+```
 calendar_event/
 ├── backend/
 │   ├── config/
@@ -604,68 +771,73 @@ calendar_event/
     │   └── styles/
     ├── public/
     └── package.json
+```
 
-🧪 Tests
-Fixtures de test
-Code famille : NOEL2026
-6 profils :
+---
 
-Khyle (4 ans, enfant, theme: colorful_village)
-Khelyann (16 ans, ado, theme: modern_snow)
-Papa (45 ans, parent, ADMIN, theme: cozy)
-Maman (42 ans, parent, theme: cozy)
-Mamie (74 ans, grand_parent, theme: traditionnel)
-Papy (76 ans, grand_parent, theme: traditionnel)
+## 🧪 Tests
 
-Tester avec Postman :
+### Fixtures de test
 
-Authentification (code + profil)
-Ouvrir porte
-Upload photo
-Consulter galerie
-Vérifier erreurs (403, 404, 400)
+**Code famille :** `NOEL2026`
 
+**6 profils :**
+1. Khyle (4 ans, enfant, theme: colorful_village)
+2. Khelyann (16 ans, ado, theme: modern_snow)
+3. Papa (45 ans, parent, ADMIN, theme: cozy)
+4. Maman (42 ans, parent, theme: cozy)
+5. Mamie (74 ans, grand_parent, theme: traditionnel)
+6. Papy (76 ans, grand_parent, theme: traditionnel)
 
-🚀 Roadmap Frontend
-Phase 1 - Setup (À venir)
+**Tester avec Postman :**
+1. Authentification (code + profil)
+2. Ouvrir porte
+3. Upload photo
+4. Consulter galerie
+5. Vérifier erreurs (403, 404, 400)
 
- Créer projet React
- Configurer Axios
- Setup React Router
- Intégrer Tailwind CSS
+---
 
-Phase 2 - Authentification
+## 🚀 Roadmap Frontend
 
- Page de connexion (code famille)
- Sélection de profil Netflix-style
- Gestion token JWT
- Protected routes
+### Phase 1 - Setup (À venir)
+- [ ] Créer projet React
+- [ ] Configurer Axios
+- [ ] Setup React Router
+- [ ] Intégrer Tailwind CSS
 
-Phase 3 - Calendrier
+### Phase 2 - Authentification
+- [ ] Page de connexion (code famille)
+- [ ] Sélection de profil Netflix-style
+- [ ] Gestion token JWT
+- [ ] Protected routes
 
- Affichage des 24 portes
- Génération positions aléatoires (Math.random)
- Animation ouverture porte
- Thèmes dynamiques par profil
+### Phase 3 - Calendrier
+- [ ] Affichage des 24 portes
+- [ ] Génération positions aléatoires (Math.random)
+- [ ] Animation ouverture porte
+- [ ] Thèmes dynamiques par profil
 
-Phase 4 - Photos
+### Phase 4 - Photos
+- [ ] Upload photo
+- [ ] Galerie masonry layout
+- [ ] Lightbox
+- [ ] Filtres par membre
 
- Upload photo
- Galerie masonry layout
- Lightbox
- Filtres par membre
+### Phase 5 - Finitions
+- [ ] Musique de Noël
+- [ ] Vidéo de fond
+- [ ] Responsive design
+- [ ] Tests
 
-Phase 5 - Finitions
+---
 
- Musique de Noël
- Vidéo de fond
- Responsive design
- Tests
+## 🚀 Déploiement
 
+### Production Backend
 
-🚀 Déploiement
-Production Backend
-bash# 1. Variables d'environnement
+```bash
+# 1. Variables d'environnement
 APP_ENV=prod
 DATABASE_URL=postgresql://...
 JWT_PASSPHRASE=votre_passphrase_sécurisée
@@ -681,69 +853,81 @@ chown -R www-data:www-data public/uploads/
 
 # 4. (Optionnel) Fixtures production
 php bin/console doctrine:fixtures:load --no-interaction
-Production Frontend (à venir)
-bashnpm run build
+```
+
+### Production Frontend (à venir)
+
+```bash
+npm run build
 # Déploiement sur Netlify/Vercel
+```
 
-📝 Changelog
-Version 2.1.0 (3 janvier 2026)
+---
 
-✅ Maquettes desktop terminées (Figma)
-✅ Maquettes mobile terminées (Figma)
-🎨 Login Netflix-style avec vidéo de fond
-🎨 Calendrier avec portes aléatoires
-🎨 Galerie masonry layout
-🎨 4 thèmes personnalisés complets
+## 📝 Changelog
 
-Version 2.0 (1er janvier 2026)
+### Version 2.1.0 (3 janvier 2026)
+- ✅ **Maquettes desktop terminées** (Figma)
+- ✅ **Maquettes mobile terminées** (Figma)
+- 🎨 Login Netflix-style avec vidéo de fond
+- 🎨 Calendrier avec portes aléatoires
+- 🎨 Galerie masonry layout
+- 🎨 4 thèmes personnalisés complets
 
-✨ Upload photos défis (POST /api/door-openings/{id}/photo)
-✨ Galerie familiale (GET /api/photos)
-✨ Entité Photo + migration BDD
-✨ Stockage sécurisé /public/uploads/galerie/
-✨ Filtrage par FamilyGroup
-🔒 Validation format + propriétaire
+### Version 2.0 (1er janvier 2026)
+- ✨ Upload photos défis (POST /api/door-openings/{id}/photo)
+- ✨ Galerie familiale (GET /api/photos)
+- ✨ Entité Photo + migration BDD
+- ✨ Stockage sécurisé `/public/uploads/galerie/`
+- ✨ Filtrage par FamilyGroup
+- 🔒 Validation format + propriétaire
 
-Version 1.0 (Décembre 2025)
+### Version 1.0 (Décembre 2025)
+- ✨ Architecture multi-tenant par famille
+- ✨ Authentification par code famille partagé
+- ✨ API REST complète (9 endpoints)
+- ✨ JWT authentification
+- ✨ 7 entités (User, Door, DoorOpening, Famille, Theme, FamilyGroup, Photo)
+- ✨ Voter pour règles métier
+- ✨ 24 portes + 4 thèmes
 
-✨ Architecture multi-tenant par famille
-✨ Authentification par code famille partagé
-✨ API REST complète (9 endpoints)
-✨ JWT authentification
-✨ 7 entités (User, Door, DoorOpening, Famille, Theme, FamilyGroup, Photo)
-✨ Voter pour règles métier
-✨ 24 portes + 4 thèmes
+---
 
+## 👤 Auteur
 
-👤 Auteur
-Emmanuel Chabrier
-Étudiant Développeur Web & Mobile - AFPA Saint-Jean-de-Védas
+**Emmanuel Chabrier**  
+Étudiant Développeur Web & Mobile - AFPA Saint-Jean-de-Védas  
 Projet ECF - Décembre 2025 → Avril 2026
-GitHub : https://github.com/chabriermanu
 
-📄 Licence
+**GitHub :** https://github.com/chabriermanu
+
+---
+
+## 📄 Licence
+
 Projet éducatif AFPA - Tous droits réservés
 
-🔗 Liens utiles
-Backend :
+---
 
-Symfony : https://symfony.com/doc/current/index.html
-API Platform : https://api-platform.com/docs/
-JWT Bundle : https://github.com/lexik/LexikJWTAuthenticationBundle
-Doctrine : https://www.doctrine-project.org/
-Upload Files Symfony : https://symfony.com/doc/current/controller/upload_file.html
+## 🔗 Liens utiles
 
-Frontend (à venir) :
+**Backend :**
+- Symfony : https://symfony.com/doc/current/index.html
+- API Platform : https://api-platform.com/docs/
+- JWT Bundle : https://github.com/lexik/LexikJWTAuthenticationBundle
+- Doctrine : https://www.doctrine-project.org/
+- Upload Files Symfony : https://symfony.com/doc/current/controller/upload_file.html
 
-React : https://react.dev/
-Axios : https://axios-http.com/
-React Router : https://reactrouter.com/
-Tailwind CSS : https://tailwindcss.com/
+**Frontend (à venir) :**
+- React : https://react.dev/
+- Axios : https://axios-http.com/
+- React Router : https://reactrouter.com/
+- Tailwind CSS : https://tailwindcss.com/
 
-Design :
+**Design :**
+- Figma : *(lien vers maquettes à ajouter)*
 
-Figma : (lien vers maquettes à ajouter)
+---
 
-
-Dernière mise à jour : 3 janvier 2026
-9 endpoints API | 7 entités | Backend 100% ✅ | Maquettes 100% ✅ | Frontend 0% ⏳
+**Dernière mise à jour : 3 janvier 2026**  
+**9 endpoints API | 7 entités | Backend 100% ✅ | Maquettes 100% ✅ | Frontend 0% ⏳**
