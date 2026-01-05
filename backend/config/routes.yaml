@@ -40,6 +40,7 @@ api_themes:
     path: /api/themes
     controller: App\Controller\ThemesController::index
     methods: GET
+    
 api_photo_upload:
     path: /api/door-openings/{id}/photo
     controller: App\Controller\PhotoController::upload
@@ -49,3 +50,18 @@ api_photo_list:
     path: /api/photos
     controller: App\Controller\PhotoController::list
     methods: GET
+
+api_photos_by_door: 
+    path: /api/door-openings/{id}/photos 
+    controller: App\Controller\PhotoController::getPhotosByDoor 
+    methods: GET
+
+api_photo_get: 
+    path: /api/photos/{id} 
+    controller: App\Controller\PhotoController::getPhoto 
+    methods: GET
+
+api_photo_delete: 
+    path: /api/photos/{id} 
+    controller: App\Controller\PhotoController::deletePhoto 
+    methods: DELETE

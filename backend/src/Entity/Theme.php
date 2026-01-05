@@ -26,7 +26,7 @@ class Theme
     private ?string $primaryColor = null;
 
     #[ORM\Column(length: 7)]
-    private ?string $SecondaryColor = null;
+    private ?string $secondaryColor = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $musicUrl = null;
@@ -91,12 +91,12 @@ class Theme
 
     public function getSecondaryColor(): ?string
     {
-        return $this->SecondaryColor;
+        return $this->secondaryColor;
     }
 
     public function setSecondaryColor(string $SecondaryColor): static
     {
-        $this->SecondaryColor = $SecondaryColor;
+        $this->secondaryColor = $SecondaryColor;
 
         return $this;
     }

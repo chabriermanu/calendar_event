@@ -16,15 +16,11 @@ security:
             # Ensure dev tools and static assets are always allowed
             pattern: ^/(_profiler|_wdt|assets|build)/
             security: false
-        login:
+         # Firewall pour les routes d'authentification custom
+        auth:
             pattern: ^/auth
             stateless: true
-            json_login:
-                check_path: /auth
-                username_path: email
-                password_path: password
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            security: false  # Pas de sécurité sur /auth (géré manuellement)
         
         api:
             pattern: ^/api

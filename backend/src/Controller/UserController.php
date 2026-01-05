@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Mapper\UserMapper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -11,6 +12,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/api', name: 'api_')]
 class UserController extends AbstractController
 {
+    public function __construct(
+        private readonly UserMapper $userMapper
+    ) {}
+
     #[Route('/me', name: 'me', methods: ['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function me(): JsonResponse
@@ -18,13 +23,10 @@ class UserController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        return $this->json([
-            'id' => $user->getId(),
-            'pseudo' => $user->getPseudo(),
-            'age' => $user->getAge(),
-            'avatar' => $user->getAvatar(),
-            'roles' => $user->getRoles(),
-        ]);
+        // Transformation Entity → DTO via le Mapper
+        $dto = $this->userMapper->toUserMeResponse($user);
+
+        return $this->json($dto);
     }
 
     #[Route('/me/famille', name: 'me_famille', methods: ['GET'])]
@@ -39,20 +41,12 @@ class UserController extends AbstractController
             return $this->json(['error' => 'Profil famille non trouvé'], 404);
         }
 
-        return $this->json([
-            'id' => $famille->getId(),
-            'avatar' => $famille->getAvatar(),
-            'familyRole' => $famille->getFamilyRole(),
-            'hasCalendarAccess' => $famille->hasCalendarAccess(),
-            'theme' => [
-                'id' => $famille->getTheme()->getId(),
-                'name' => $famille->getTheme()->getName(),
-                'backgroundImage' => $famille->getTheme()->getBackgroundImage(),
-                'primaryColor' => $famille->getTheme()->getPrimaryColor(),
-                'secondaryColor' => $famille->getTheme()->getSecondaryColor(),
-                'musicUrl' => $famille->getTheme()->getMusicUrl(),
-                'videoUrl' => $famille->getTheme()->getVideoUrl(),
-            ]
-        ]);
+        // Transformation Entity → DTO via le Mapper
+        $dto = $this->userMapper->toFamilleProfileResponse($famille);
+
+        return $this->json($dto);
     }
 }
+// Injection du UserMapper dans le constructeur
+// Plus de construction manuelle de tableaux
+// Code plus propre et maintenable
