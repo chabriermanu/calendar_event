@@ -2,12 +2,31 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import type { FamilyCodeResponse } from '../types';
+import './LoginPage.css';
 
 const LoginPage = () => {
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const generateSnowFlakes = () => {
+    const snowflakes = [];
+    for (let i =0; i < 50; i++){
+      const style ={
+        left: `${Math.random() * 100}%`,
+        animationDuration:`${Math.random() * 3 + 5}s`,
+        animationDelay: `${Math.random() * 5}s`,
+        fontSize: `${Math.random() * 10 + 10}px`,
+      };
+      snowflakes.push(
+        <div key={i} className="snowflake" style={style}>
+         ❄️
+        </div>
+      );
+    }
+    return snowflakes;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,49 +49,49 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-700 via-green-700 to-red-700 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-red-600 mb-2">
-            🎄 Calendrier de l'Avent
-          </h1>
-          <p className="text-gray-600">Entrez votre code famille</p>
-        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="code" className="block text-sm font-medium text-gray-700 mb-2">
-              Code Famille
-            </label>
-            <input
-              id="code"
-              type="text"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              placeholder="NOEL2026"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent text-center text-2xl font-bold uppercase"
-              required
-              maxLength={10}
-            />
-          </div>
+    <div className="login-page">
 
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-              {error}
-            </div>
-          )}
+      {/* header avec un message de bienvenue*/}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? '🎅 Vérification...' : '🎁 Continuer'}
-          </button>
-        </form>
+      <header className="login-header">
 
-        <div className="mt-8 text-center text-gray-400 text-sm">
-          ❄️ ⭐ 🎄 ⭐ ❄️
+        <h1>bienvenue dans la magie de Noël 2026</h1>
+        <p>Créez des souvenir inoubliable avec votre famille</p>
+
+      </header>
+
+      {/* Fond avec le village enneigé*/}
+      <div className="snow-background"></div>
+
+
+      <div className="snowflakes" aria-hidden="true">
+
+        {generateSnowFlakes()}
+
+      </div>
+
+      {/* Formulaire centré */}
+      <div className="login-container">
+
+        <div className="login-card">
+
+          <h2 className="login-title">Calendrier de l'Avent 2026</h2>
+
+          <form onSubmit={handleSubmit} className="login-form">
+
+            <h3>Connectez-vous</h3>
+            <label>Entrez le code Famille</label>
+
+            <input type="text" value={code} onChange={e=>setCode(e.target.value)} placeholder='ex: NOEL2026' className="code-input"required maxLength={10}/>
+            {error && (
+              <div className="error-message">{error}</div>
+            )}
+
+            <button type="submit" disabled={loading} className="submit-button">
+              {loading? 'Verification...' : 'valider'}
+            </button>
+          </form>
         </div>
       </div>
     </div>
