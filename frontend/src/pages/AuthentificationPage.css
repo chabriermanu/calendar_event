@@ -1,0 +1,279 @@
+/* === PAGE PRINCIPALE === */
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif; /* Police par défaut */
+}
+
+/* === HEADER AVEC DÉGRADÉ VERT === */
+.login-header {
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(135deg, #66d9a3 0%, #4fc1b7 50%, #3aaed1 100%);
+  padding: 10px 5px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.login-header h1 {
+  font-family: 'Baloo 2', cursive;
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.login-header p {
+  font-family: 'Poppins', sans-serif;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.1rem;
+  margin: 8px 0 0 0;
+  font-weight: 300;
+}
+
+.back-icon-button {
+  position: absolute;
+  top: 50%;
+  left: 2vw;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 20;
+}
+
+
+.back-icon-img {
+  width: 40px;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+
+.back-icon-button:hover .back-icon-img { 
+    transform: scale(1.1); 
+}
+
+/* === FOND AVEC IMAGE DU VILLAGE === */
+.snow-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/pngtree-holiday-christmas-background-with-christmas-village-and-winter-landscape-vector-image_15503030.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* === EFFET DE NEIGE === */
+.snowflakes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: white;
+  font-size: 1em;
+  opacity: 0.8;
+  animation: fall linear infinite;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0.3; }
+}
+
+/* === CONTAINER DU FORMULAIRE === */
+.login-container {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: 40px 20px;
+}
+
+/* === CARTE DE LOGIN === */
+.login-card {
+  background: rgba(173, 216, 230, 0.10);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 50px 60px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  max-width: 550px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-title {
+  font-family: 'Baloo 2', cursive;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 40px 0;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+  border: 3px solid white;
+  padding: 15px 30px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* === FORMULAIRE === */
+.login-form {
+  margin-top: 30px;
+}
+
+.login-form h3 {
+  font-family: 'Baloo 2', cursive;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.login-form label {
+  font-family: 'Poppins', sans-serif;
+  display: block;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* === INPUT DU CODE === */
+.code-input {
+  width: 80%;
+  max-width: 400px;
+  margin: 0 auto 25px auto;
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.code-input:focus {
+  outline: none;
+  border-color: white;
+  background: white;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
+}
+
+.code-input::placeholder {
+  color: #666;
+  font-weight: 500;
+  text-transform: none;
+}
+
+/* === MESSAGE D'ERREUR === */
+.error-message {
+  font-family: 'Poppins', sans-serif;
+  background: rgba(220, 38, 38, 0.9);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* === BOUTON VALIDER === */
+.submit-button {
+  width: 60%;
+  max-width: 300px;
+  display: block;
+  margin: 0 auto;
+  padding: 12px 20px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 30px;
+  background: #3aaed1;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
+  box-shadow: 0 8px 25px rgba(0, 102, 204, 0.6);
+  transform: translateY(-2px);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
+}
+
+.submit-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .login-header h1 { font-size: 1.5rem; }
+  .login-header p { font-size: 0.95rem; }
+  .login-card { padding: 35px 30px; }
+  .login-title { font-size: 1.8rem; padding: 12px 20px; }
+  .login-form h3 { font-size: 1.4rem; }
+  .login-form label { font-size: 1.1rem; }
+  .code-input { font-size: 1.2rem; padding: 15px 20px; }
+  .submit-button { font-size: 1.2rem; padding: 15px 25px; }
+}
+
+@media (max-width: 480px) {
+  .login-header { padding: 20px 15px; }
+  .login-header h1 { font-size: 1.2rem; }
+  .login-header p { font-size: 0.85rem; }
+  .login-container { padding: 20px 15px; }
+  .login-card { padding: 25px 20px; }
+  .login-title { font-size: 1.5rem; padding: 10px 15px; }
+}
+
+/* Contour flou noir sur tout le texte de la page */
+/* Contour flou noir sur tout le texte de la page */
+.login-page *:not(input):not(textarea) {
+  text-shadow: 0 0 4px rgba(0, 0, 0, 1);
+}
+
