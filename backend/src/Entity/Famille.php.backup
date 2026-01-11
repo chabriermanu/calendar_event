@@ -13,7 +13,7 @@ class Famille
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'famille')]
+    #[ORM\ManyToOne(inversedBy: 'famille')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
 
@@ -29,11 +29,6 @@ class Famille
 
     #[ORM\Column]
     private ?bool $hasCalendarAccess = null;
-
-    // ✅ NOUVELLE RELATION vers FamilyGroup
-    #[ORM\ManyToOne(targetEntity: FamilyGroup::class)]
-    #[ORM\JoinColumn(nullable: true)] // nullable au début pour la migration
-    private ?FamilyGroup $familyGroup = null;
 
     public function getId(): ?int
     {
@@ -88,6 +83,7 @@ class Famille
         return $this;
     }
 
+
     public function setHasCalendarAcess(bool $hasCalendarAcess): static
     {
         $this->hasCalendarAccess = $hasCalendarAcess;
@@ -103,19 +99,6 @@ class Famille
     public function setHasCalendarAccess(bool $hasCalendarAccess): static
     {
         $this->hasCalendarAccess = $hasCalendarAccess;
-
-        return $this;
-    }
-
-    // ✅ NOUVEAUX GETTERS/SETTERS pour FamilyGroup
-    public function getFamilyGroup(): ?FamilyGroup
-    {
-        return $this->familyGroup;
-    }
-
-    public function setFamilyGroup(?FamilyGroup $familyGroup): static
-    {
-        $this->familyGroup = $familyGroup;
 
         return $this;
     }

@@ -19,45 +19,45 @@ class AppFixtures extends Fixture
     
     {
     
-            // ========== THEMES ==========
-        $themes = [
-            [
-                'name' => 'colorful_village',
-                'background' => 'village_colore.jpg',
-                'primary' => '#FF6B6B',
-                'secondary' => '#4ECDC4',
-                'music' => 'jingle_bells.mp3',
-                'video' => null,
-                'description' => 'Village coloré et joyeux pour les enfants'
-            ],
-            [
-                'name' => 'modern_snow',
-                'background' => 'neige_moderne.jpg',
-                'primary' => '#00A8E8',
-                'secondary' => '#FFFFFF',
-                'music' => 'snow_ambient.mp3',
-                'video' => 'snow_falling.mp4',
-                'description' => 'Ambiance moderne et épurée pour les ados'
-            ],
-            [
-                'name' => 'cozy',
-                'background' => 'cheminee.jpg',
-                'primary' => '#8B4513',
-                'secondary' => '#FFA500',
-                'music' => 'home_alone.mp3',
-                'video' => 'fireplace.mp4',
-                'description' => 'Atmosphère chaleureuse et cosy pour les parents'
-            ],
-            [
-                'name' => 'traditionnel',
-                'background' => 'noel_traditionnel.jpg',
-                'primary' => '#C41E3A',
-                'secondary' => '#0F8A5F',
-                'music' => 'silent_night.mp3',
-                'video' => null,
-                'description' => 'Noël traditionnel pour les grands-parents'
-            ]
-        ];
+// ========== THEMES ==========
+    $themes = [
+        [
+            'name' => 'colorful_village',
+            'background' => 'images/themes/village-colore.jpg',  // ✅ Vraie image
+            'primary' => '#FF6B6B',
+            'secondary' => '#4ECDC4',
+            'music' => 'jingle_bells.mp3',
+            'video' => null,
+            'description' => 'Village coloré et joyeux pour les enfants'
+        ],
+        [
+            'name' => 'modern_snow',
+            'background' => 'images/themes/moderne-ville.jpg',  // ✅ Vraie image
+            'primary' => '#00A8E8',
+            'secondary' => '#FFFFFF',
+            'music' => 'snow_ambient.mp3',
+            'video' => 'snow_falling.mp4',
+            'description' => 'Ambiance moderne et épurée pour les ados'
+        ],
+        [
+            'name' => 'cozy',
+            'background' => 'images/themes/cosy-fireplace.jpg',  // ✅ Vraie image
+            'primary' => '#8B4513',
+            'secondary' => '#FFA500',
+            'music' => 'home_alone.mp3',
+            'video' => 'fireplace.mp4',
+            'description' => 'Atmosphère chaleureuse et cosy pour les parents'
+        ],
+        [
+            'name' => 'traditionnel',
+            'background' => 'images/themes/traditionnelle-deco.jpg',  // ✅ Vraie image
+            'primary' => '#C41E3A',
+            'secondary' => '#0F8A5F',
+            'music' => 'silent_night.mp3',
+            'video' => null,
+            'description' => 'Noël traditionnel pour les grands-parents'
+        ]
+    ];
 
         $themeObjects = []; // Pour stocker les objets Theme
         foreach ($themes as $themeData) {

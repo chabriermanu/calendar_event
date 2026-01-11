@@ -65,3 +65,8 @@ api_photo_delete:
     path: /api/photos/{id} 
     controller: App\Controller\PhotoController::deletePhoto 
     methods: DELETE
+
+api_family_register:
+    path: /api/family/register
+    controller: App\Controller\FamilyRegistrationController::register
+    methods: POST
