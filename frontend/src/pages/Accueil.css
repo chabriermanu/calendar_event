@@ -53,16 +53,33 @@
 
 .title {
   font-size: 2.5rem;
-  color: white;
+  color: #ffffff;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+  /* Contour net */
+  -webkit-text-stroke: 2px #000;
+
+  /* Ombre douce pour renforcer la lisibilité */
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+
+  /* Améliore le rendu du texte */
+  font-weight: 700;
 }
 
 .subtitle {
-  font-size: 1.2rem;
-  color: #e0e0e0;
+  font-size: 1.6rem;
+  color: #ffffff;
   margin-bottom: 2rem;
+
+  /* Contour plus fin pour un contraste subtil */
+  -webkit-text-stroke: 1px #000;
+
+  /* Ombre cohérente avec le titre */
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.75);
+
+  font-weight: 500;
 }
+
 
 .button-group {
   display: flex;
@@ -76,10 +93,10 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 25px;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .action-button:hover {
