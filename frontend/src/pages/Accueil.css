@@ -4,8 +4,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  background-image: url('/images/pngtree-holiday-christmas-background-with-christmas-village-and-winter-landscape-vector-image_15503030.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   overflow: hidden;
+}
+
+/* Ajoute des étoiles scintillantes */
+.accueil-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent);
+  background-size: 200px 200px;
+  animation: twinkle 3s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
 }
 
 .snow-background {
@@ -35,9 +60,22 @@
   color: white;
   animation: fall linear infinite;
   user-select: none;
+  opacity: 0.8;
 }
 
-@keyframes fall {
+@keyframes fall-slow {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+@keyframes fall-medium {
+  to {
+    transform: translateY(110vh) rotate(180deg);
+  }
+}
+
+@keyframes fall-fast {
   to {
     transform: translateY(110vh);
   }
@@ -49,6 +87,30 @@
   text-align: center;
   padding: 2rem;
   max-width: 600px;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.subtitle {
+  animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.button-group {
+  animation: fadeInUp 1s ease-out 0.6s both;
 }
 
 .title {
@@ -67,7 +129,7 @@
 }
 
 .subtitle {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   color: #ffffff;
   margin-bottom: 2rem;
 
@@ -90,18 +152,47 @@
 .action-button {
   padding: 1rem 2rem;
   font-size: 1.1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #667eea80 0%, #9b51e680 100%);
   color: white;
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.4);
   border-radius: 25px;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* Pour garder le texte lisible */
+}
+/* Effet de brillance au survol */
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
 }
 
-.action-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+.action-button:hover::before {
+  left: 100%;
+}
+
+.action-button:hover { 
+  background: linear-gradient(135deg, #667eeab3 0%, #764ba2b3 100%);
+  border-color: #ffffff80;
+  
+}
+
+.action-button:active {
+  transform: translateY(-1px);
 }
 
 .small-text {
