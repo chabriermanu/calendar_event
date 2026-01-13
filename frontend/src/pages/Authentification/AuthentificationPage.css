@@ -107,8 +107,8 @@
   display: block;
 }
 
-
 /* === FOND AVEC IMAGE DU VILLAGE === */
+
 .snow-background {
   position: absolute;
   top: 0;
@@ -122,33 +122,8 @@
   z-index: 1;
 }
 
-/* === EFFET DE NEIGE === */
-.snowflakes {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.snowflake {
-  position: absolute;
-  top: -10%;
-  color: white;
-  animation: fall linear infinite;
-  user-select: none;
-  opacity: 0.8;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(110vh) rotate(360deg);
-  }
-}
-
 /* === CONTAINER DU FORMULAIRE === */
+
 .login-container {
   position: relative;
   z-index: 5;
@@ -172,6 +147,7 @@
 }
 
 /* === CARTE DE LOGIN GLASSMORPHISM === */
+
 .login-card {
   background: linear-gradient(135deg, 
     rgba(102, 126, 234, 0.2) 0%, 
@@ -203,6 +179,7 @@
 }
 
 /* === FORMULAIRE === */
+
 .login-form {
   margin-top: 30px;
 }
@@ -229,6 +206,7 @@
 }
 
 /* === INPUT DU CODE === */
+
 .code-input {
   width: 80%;
   max-width: 400px;
@@ -264,6 +242,7 @@
 }
 
 /* === MESSAGE D'ERREUR === */
+
 .error-message {
   font-family: 'Poppins', sans-serif;
   background: rgba(220, 38, 38, 0.8);
@@ -285,6 +264,7 @@
 }
 
 /* === BOUTON VALIDER GLASSMORPHISM === */
+
 .submit-button {
   width: 60%;
   max-width: 300px;
@@ -312,6 +292,7 @@
 }
 
 /* Effet de brillance */
+
 .submit-button::before {
   content: '';
   position: absolute;
@@ -357,7 +338,24 @@
 }
 
 /* === RESPONSIVE === */
+
 @media (max-width: 768px) {
+  /* Bouton retour */
+  .back-icon-button {
+    left: 10px;
+    top: 20px;
+    transform: none;
+    padding: 6px;
+  }
+  
+  .back-icon-img {
+    width: 32px;
+  }
+  
+  .login-header {
+    padding-left: 60px; /* Laisse de l'espace pour le bouton */
+  }
+  
   .login-header h1 { 
     font-size: 1.5rem; 
     -webkit-text-stroke: 1.5px #000;
@@ -389,8 +387,20 @@
 }
 
 @media (max-width: 480px) {
+  /* Bouton retour */
+  .back-icon-button {
+    left: 8px;
+    top: 15px;
+    padding: 5px;
+  }
+  
+  .back-icon-img {
+    width: 28px;
+  }
+  
   .login-header { 
-    padding: 20px 15px; 
+    padding: 20px 15px;
+    padding-left: 50px; /* Espace pour le bouton sur petit écran */
   }
   .login-header h1 { 
     font-size: 1.2rem; 

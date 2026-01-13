@@ -1,31 +1,18 @@
+// src/pages/Accueil/Accueil.tsx
 import { useNavigate } from "react-router-dom"; 
-import { useState, useEffect, useRef } from "react"; 
+import { useEffect, useRef } from "react"; 
+import Snowfall from "../../components/Snowfall/Snowfall";
 import "./Accueil.css";
 
 const Accueil = () => {
     const navigate = useNavigate();
-    
-    // ✅ Audio dans un ref (modifiable sans erreur)
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    // ❄️ Flocons générés UNE SEULE FOIS avec useState + fonction d'initialisation
-    const [snowflakes] = useState(() => 
-        Array.from({ length: 50 }).map((_, i) => ({
-            id: i,
-            left: `${Math.random() * 100}%`,
-            animationDuration: `${Math.random() * 3 + 5}s`,
-            animationDelay: `${Math.random() * 5}s`,
-            fontSize: `${Math.random() * 10 + 10}px`,
-        }))
-    );
-
     useEffect(() => {
-        // Initialisation de l'audio
         audioRef.current = new Audio("/sounds/winter-bells-442069.mp3");
         audioRef.current.loop = true; 
         audioRef.current.volume = 0.4;
 
-        // 🧹 Nettoyage
         return () => {
             if (audioRef.current) {
                 audioRef.current.pause();
@@ -46,22 +33,7 @@ const Accueil = () => {
         <div className="accueil-page">
             <div className="snow-background"></div>
             
-            <div className="snowflakes" aria-hidden="true">
-                {snowflakes.map((flake) => (
-                    <div 
-                        key={flake.id} 
-                        className="snowflake" 
-                        style={{
-                            left: flake.left,
-                            animationDuration: flake.animationDuration,
-                            animationDelay: flake.animationDelay,
-                            fontSize: flake.fontSize,
-                        }}
-                    >
-                        ❄️
-                    </div>
-                ))}
-            </div>
+            <Snowfall snowflakeCount={50} />
             
             <div className="content">
                 <h1 className="title">🎄 Bienvenue dans la magie de Noël 2026</h1>

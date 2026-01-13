@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { AxiosError } from "axios";
 import "./CreateFamily.css";
+import Snowfall from "../../components/Snowfall/Snowfall";
 
 /// <reference types="react" /> 
 
@@ -37,17 +38,6 @@ const CreateFamily = () => {
     // États pour le chargement et les erreurs
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
-
-    // ❄️ Flocons générés UNE SEULE FOIS
-    const [snowflakes] = useState(() => 
-        Array.from({ length: 50 }).map((_, i) => ({
-            id: i,
-            left: `${Math.random() * 100}%`,
-            animationDuration: `${Math.random() * 3 + 5}s`,
-            animationDelay: `${Math.random() * 5}s`,
-            fontSize: `${Math.random() * 10 + 10}px`,
-        }))
-    );
 
     // ✨ Charger les thèmes depuis l'API au montage du composant
     useEffect(() => {
@@ -144,34 +134,22 @@ const CreateFamily = () => {
 
     return (
         <div className="create-family-page">
-            <div className="snow-background"></div>
             
-            <div className="snowflakes" aria-hidden="true">
-                {snowflakes.map((flake) => (
-                    <div 
-                        key={flake.id} 
-                        className="snowflake" 
-                        style={{
-                            left: flake.left,
-                            animationDuration: flake.animationDuration,
-                            animationDelay: flake.animationDelay,
-                            fontSize: flake.fontSize,
-                        }}
-                    >
-                        ❄️
-                    </div>
-                ))}
-            </div>
-
+            <div className="snow-background"></div>
+            <Snowfall snowflakeCount={50} />
             <div className="form-container">
-                <h1 className="form-title">Créer votre calendrier Familial</h1>
-
+                <div className="form-header">
+                    <button className="back-icon-button" onClick={() => navigate('/')} aria-label="Retour à l'accueil" >
+                        <img src="/icons/icons8-annuler-94.png" alt="Retour" className="back-icon-img" />
+                    </button>
+                    <h1 className="form-title">Créer votre calendrier Familial</h1>
+                </div>
                 {error && (
                     <div className="error-message">
                         ⚠️ {error}
                     </div>
                 )}
-
+                
                 <form onSubmit={handleSubmit} className="family-form">
                     <div className="form-group">
                         <label htmlFor="familyName">Nom de votre famille</label>

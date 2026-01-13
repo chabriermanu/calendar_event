@@ -44,43 +44,6 @@
   z-index: 1;
 }
 
-.snowflakes {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.snowflake {
-  position: absolute;
-  top: -10%;
-  color: white;
-  animation: fall linear infinite;
-  user-select: none;
-  opacity: 0.8;
-}
-
-@keyframes fall-slow {
-  to {
-    transform: translateY(110vh) rotate(360deg);
-  }
-}
-
-@keyframes fall-medium {
-  to {
-    transform: translateY(110vh) rotate(180deg);
-  }
-}
-
-@keyframes fall-fast {
-  to {
-    transform: translateY(110vh);
-  }
-}
-
 .content {
   position: relative;
   z-index: 3;
@@ -142,7 +105,6 @@
   font-weight: 500;
 }
 
-
 .button-group {
   display: flex;
   flex-direction: column;
@@ -162,8 +124,9 @@
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(20px);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* Pour garder le texte lisible */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
+
 /* Effet de brillance au survol */
 .action-button::before {
   content: '';
@@ -188,7 +151,6 @@
 .action-button:hover { 
   background: linear-gradient(135deg, #667eeab3 0%, #764ba2b3 100%);
   border-color: #ffffff80;
-  
 }
 
 .action-button:active {
@@ -200,4 +162,19 @@
   font-size: 0.85rem;
   margin-top: 0.3rem;
   opacity: 0.9;
+}
+
+/* === RESPONSIVE === */
+
+@media (max-width: 768px) {
+  .title { 
+    font-size: 1.8rem; 
+  }
+  .subtitle { 
+    font-size: 1.2rem; 
+  }
+  .action-button {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
 }

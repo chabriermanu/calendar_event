@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 
 // ✅ Import manquant ajouté
-import Accueil from "./pages/Accueil";
-import CreateFamily from "./pages/CreateFamily";
-import AuthentificationPage from "./pages/AuthentificationPage";
+import Accueil from "./pages/Acceuil/Accueil";
+import CreateFamily from "./pages/CreateFamily/CreateFamily";
+import AuthentificationPage from "./pages/Authentification/AuthentificationPage";
 import SelectProfilePage from "./pages/SelectProfilePage";
 import CalendarPage from "./pages/CalendarPage";
 

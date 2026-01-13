@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api/axios';
-import type { FamilyCodeResponse } from '../types';
+import api from '../../api/axios';
+import type { FamilyCodeResponse } from '../../types';
+import Snowfall from "../../components/Snowfall/Snowfall";
 import './AuthentificationPage.css';
 
 const LoginPage = () => {
@@ -48,38 +49,11 @@ const LoginPage = () => {
     }
   };
 
-  // NEIGE
-  const generateSnowFlakes = () => {
-    const snowflakes = [];
-    for (let i = 0; i < 50; i++) {
-      const style = {
-        left: `${Math.random() * 100}%`,
-        animationDuration: `${Math.random() * 3 + 5}s`,
-        animationDelay: `${Math.random() * 5}s`,
-        fontSize: `${Math.random() * 10 + 10}px`,
-      };
-      snowflakes.push(
-        <div key={i} className="snowflake" style={style}>
-          ❄️
-        </div>
-      );
-    }
-    return snowflakes;
-  };
-
-  return (
+   return (
     <div className="login-page">
       <header className="login-header">
-        <button
-          className="back-icon-button"
-          onClick={() => navigate('/')}
-          aria-label="Retour à l'accueil"
-        >
-          <img
-            src="/icons/icons8-annuler-94.png"
-            alt="Retour"
-            className="back-icon-img"
-          />
+        <button className="back-icon-button" onClick={() => navigate('/')} aria-label="Retour à l'accueil" >
+          <img src="/icons/icons8-annuler-94.png" alt="Retour" className="back-icon-img" />
         </button>
 
         <h1>Bienvenue dans la magie de Noël 2026</h1>
@@ -88,9 +62,9 @@ const LoginPage = () => {
 
       <div className="snow-background"></div>
 
-      <div className="snowflakes" aria-hidden="true">
-        {generateSnowFlakes()}
-      </div>
+      
+        <Snowfall snowflakeCount={50} />
+      
 
       <div className="login-container">
         <div className="login-card">
