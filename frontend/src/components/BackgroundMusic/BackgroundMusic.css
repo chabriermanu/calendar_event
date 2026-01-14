@@ -1,0 +1,112 @@
+/* src/components/BackgroundMusic/BackgroundMusic.css */
+.music-control-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    /* 🎨 Style glassmorphism comme tes autres éléments */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.music-control-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+    border-color: rgba(212, 175, 55, 0.8);
+}
+
+.music-control-button:active {
+    transform: scale(0.95);
+}
+
+/* Icône FontAwesome */
+.speaker-icon-fa {
+    font-size: 28px;
+    color: #d4af37; /* Couleur dorée */
+    transition: all 0.3s ease;
+}
+
+/* Effet quand le son est coupé */
+.music-control-button.muted {
+    opacity: 0.6;
+    background: rgba(200, 200, 200, 0.6);
+    border-color: rgba(150, 150, 150, 0.5);
+}
+
+.music-control-button.muted .speaker-icon-fa {
+    color: #666;
+}
+
+/* Animation quand la musique joue */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+.music-control-button:not(.muted) .speaker-icon-fa {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Animation au hover */
+.music-control-button:hover .speaker-icon-fa {
+    color: #ffd700; /* Or plus vif au survol */
+}
+/* 📱 MEDIA QUERIES - RESPONSIVE */
+
+/* Tablettes (768px et moins) */
+@media (max-width: 768px) {
+    .music-control-button {
+        width: 55px;
+        height: 55px;
+        bottom: 80px; /* Plus haut pour éviter les barres de navigation mobiles */
+        right: 15px;
+    }
+    
+    .speaker-icon-fa {
+        font-size: 24px;
+    }
+}
+
+/* Mobiles (480px et moins) */
+@media (max-width: 480px) {
+    .music-control-button {
+        width: 50px;
+        height: 50px;
+        bottom: 70px;
+        right: 10px;
+    }
+    
+    .speaker-icon-fa {
+        font-size: 22px;
+    }
+    
+    /* Réduit l'animation sur mobile pour économiser les ressources */
+    .music-control-button:not(.muted) .speaker-icon-fa {
+        animation: pulse 3s ease-in-out infinite;
+    }
+}
+
+/* Très petits écrans (360px et moins) */
+@media (max-width: 360px) {
+    .music-control-button {
+        width: 45px;
+        height: 45px;
+        bottom: 60px;
+        right: 8px;
+    }
+    
+    .speaker-icon-fa {
+        font-size: 20px;
+    }
+}

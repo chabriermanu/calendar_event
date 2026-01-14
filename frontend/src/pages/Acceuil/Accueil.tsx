@@ -1,34 +1,16 @@
 // src/pages/Accueil/Accueil.tsx
-import { useNavigate } from "react-router-dom"; 
-import { useEffect, useRef } from "react"; 
+import { useNavigate } from "react-router-dom";  
 import Snowfall from "../../components/Snowfall/Snowfall";
 import "./Accueil.css";
 
 const Accueil = () => {
     const navigate = useNavigate();
-    const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    useEffect(() => {
-        audioRef.current = new Audio("/sounds/winter-bells-442069.mp3");
-        audioRef.current.loop = true; 
-        audioRef.current.volume = 0.4;
-
-        return () => {
-            if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.src = "";
-                audioRef.current = null;
-            }
-        };
-    }, []);
 
     const startMusicAndNavigate = (path: string) => {
-        audioRef.current?.play().catch(() => {
-            console.log("Autoplay bloqué, le son démarrera après un clic");
-        });
+        window.dispatchEvent(new Event('playBackgroundMusic'));
         navigate(path);
     };
-
     return (
         <div className="accueil-page">
             <div className="snow-background"></div>

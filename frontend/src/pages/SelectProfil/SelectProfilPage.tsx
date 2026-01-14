@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import api from '../api/axios';
-import type { FamilyCodeResponse, AuthResponse } from '../types';
+import { useAuth } from '../../context/AuthContext';
+import api from '../../api/axios';
+import type { FamilyCodeResponse, AuthResponse } from '../../types';
 
 const SelectProfilePage = () => {
   const [familyData, setFamilyData] = useState<FamilyCodeResponse | null>(null);

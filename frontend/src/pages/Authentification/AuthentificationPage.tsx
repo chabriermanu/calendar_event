@@ -1,29 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/axios';
 import type { FamilyCodeResponse } from '../../types';
 import Snowfall from "../../components/Snowfall/Snowfall";
 import './AuthentificationPage.css';
 
-const LoginPage = () => {
+const AuthentificationPage = () => {
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  // Musique
-  const [audio] = useState(new Audio('/sounds/winter-bells-442069.mp3'));
-
-  useEffect(() => {
-    audio.loop = true;
-    audio.volume = 0.4;
-  }, [audio]);
-
-  const startMusic = () => {
-    audio.play().catch(() => {
-      console.log("Autoplay bloqué, mais le son démarrera après un clic");
-    });
-  };
 
   // FORMULAIRE
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,9 +21,6 @@ const LoginPage = () => {
       const response = await api.post<FamilyCodeResponse>('/auth/family', {
         code: code.toUpperCase(),
       });
-
-      // 🔥 Le son démarre ici, après interaction utilisateur
-      startMusic();
 
       sessionStorage.setItem('familyData', JSON.stringify(response.data));
       navigate('/select-profile');
@@ -96,4 +79,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default AuthentificationPage;
