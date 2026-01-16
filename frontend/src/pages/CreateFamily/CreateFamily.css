@@ -19,22 +19,27 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    radial-gradient(2px 2px at 20% 30%, white, transparent),
+  background-image: radial-gradient(2px 2px at 20% 30%, white, transparent),
     radial-gradient(2px 2px at 60% 70%, white, transparent),
     radial-gradient(1px 1px at 50% 50%, white, transparent),
     radial-gradient(1px 1px at 80% 10%, white, transparent),
     radial-gradient(2px 2px at 90% 60%, white, transparent),
     radial-gradient(1px 1px at 33% 80%, white, transparent);
-  background-size: 200px 200px, 250px 250px, 180px 180px, 220px 220px, 190px 190px, 210px 210px;
+  background-size: 200px 200px, 250px 250px, 180px 180px, 220px 220px,
+    190px 190px, 210px 210px;
   animation: twinkle 3s ease-in-out infinite;
   opacity: 0.5;
   z-index: 1;
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 /* === FOND AVEC IMAGE === */
@@ -55,14 +60,15 @@
 .form-container {
   position: relative;
   z-index: 3;
-  background: linear-gradient(135deg, 
-    rgba(102, 126, 234, 0.2) 0%, 
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.2) 0%,
     rgba(118, 75, 162, 0.2) 100%
   );
   backdrop-filter: blur(20px);
   border-radius: 30px;
   padding: 2.5rem;
-  max-width: 550px;
+  max-width: 800px;
   width: 100%;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -145,9 +151,16 @@
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
 /* === FORMULAIRE === */
@@ -167,12 +180,8 @@
   font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
-  text-shadow: 
-    -1px -1px 0 #000,
-     1px -1px 0 #000,
-    -1px  1px 0 #000,
-     1px  1px 0 #000,
-     0 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000, 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .form-group input,
@@ -209,63 +218,6 @@
   color: white;
 }
 
-/* === CODE FAMILLE AVEC BOUTON GÉNÉRER === */
-.code-input-group {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.code-input-group input {
-  flex: 1;
-}
-
-.generate-btn {
-  padding: 0.9rem 1.2rem;
-  background: linear-gradient(135deg, 
-    rgba(102, 126, 234, 0.5) 0%, 
-    rgba(118, 75, 162, 0.5) 100%
-  );
-  backdrop-filter: blur(15px);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: all 0.3s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.generate-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  transition: left 0.5s;
-}
-
-.generate-btn:hover::before {
-  left: 100%;
-}
-
-.generate-btn:hover {
-  background: linear-gradient(135deg, 
-    rgba(102, 126, 234, 0.7) 0%, 
-    rgba(118, 75, 162, 0.7) 100%
-  );
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
-}
-
 /* === SECTION ADMIN === */
 .admin-section {
   background: rgba(255, 255, 255, 0.1);
@@ -295,84 +247,227 @@
   flex: 1;
 }
 
-/* === AVATAR SELECTION === */
-.avatar-selection {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
+/* === CATÉGORIE D'ÂGE === */
+.age-category {
+  color: #ffd700;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-.avatar-btn {
-  width: 70px;
-  height: 70px;
-  border: 3px solid rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
+/* === GRILLE D'AVATARS (NOUVEAU) === */
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+
+/* === OPTION D'AVATAR (NOUVEAU) === */
+.avatar-option {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  font-size: 2rem;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  padding: 1rem;
+  text-align: center;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.avatar-option:hover::before {
+  left: 100%;
+}
+
+.avatar-option:hover {
+  transform: translateY(-3px) scale(1.03);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Avatar sélectionné */
+.avatar-option.selected {
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.2);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 6px 20px rgba(255, 215, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.avatar-option.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  background: #ffd700;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #000;
+  font-weight: 900;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.avatar-btn:hover {
-  transform: scale(1.1);
-  border-color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.25);
+.avatar-option img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.6rem;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
 }
 
-.avatar-btn.selected {
-  border-color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.3);
+.avatar-option:hover img {
+  border-color: #ffd700;
+  transform: rotate(5deg) scale(1.1);
 }
 
-/* === CHECKBOXES === */
-.checkbox-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  margin-top: 0.5rem;
+.avatar-option.selected img {
+  border-color: #ffd700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
 
-.checkbox-label {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  font-size: 0.95rem;
+.avatar-option p {
   color: #ffffff;
-  cursor: pointer;
-  text-shadow: 
-    -1px -1px 0 #000,
-     1px -1px 0 #000,
-    -1px  1px 0 #000,
-     1px  1px 0 #000,
-     0 1px 3px rgba(0, 0, 0, 0.8);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.checkbox-label input[type="checkbox"] {
-  margin-top: 0.2rem;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  accent-color: #667eea;
+/* === GRILLE DES MEMBRES (NOUVEAU) === */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.checkbox-label span {
-  flex: 1;
+/* === CARTE DE MEMBRE (NOUVEAU) === */
+.member-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.member-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.5);
+  border-color: rgba(255, 215, 0, 0.5);
+}
+
+/* Bouton de suppression */
+.btn-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: #ffffff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(220, 53, 69, 0.4);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.btn-remove:hover {
+  background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+  transform: rotate(90deg) scale(1.15);
+  box-shadow: 0 5px 12px rgba(220, 53, 69, 0.6);
+}
+
+/* Avatar du membre */
+.member-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.8rem;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.member-card:hover .member-avatar {
+  border-color: #ffd700;
+  transform: rotate(5deg) scale(1.1);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+}
+
+.member-card h3 {
+  color: #ffffff;
+  margin-bottom: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.member-card p {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 /* === BOUTON DE SOUMISSION === */
 .submit-btn {
+  width: 100%;
   margin-top: 1rem;
   padding: 1rem 2rem;
   font-size: 1.2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, 
-    rgba(17, 153, 142, 0.6) 0%, 
+  background: linear-gradient(
+    135deg,
+    rgba(17, 153, 142, 0.6) 0%,
     rgba(56, 239, 125, 0.6) 100%
   );
   backdrop-filter: blur(25px);
@@ -407,9 +502,10 @@
   left: 100%;
 }
 
-.submit-btn:hover {
-  background: linear-gradient(135deg, 
-    rgba(17, 153, 142, 0.8) 0%, 
+.submit-btn:hover:not(:disabled) {
+  background: linear-gradient(
+    135deg,
+    rgba(17, 153, 142, 0.8) 0%,
     rgba(56, 239, 125, 0.8) 100%
   );
   border-color: rgba(255, 255, 255, 0.6);
@@ -422,6 +518,13 @@
   box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
 }
 
+.submit-btn:disabled {
+  background: rgba(255, 255, 255, 0.2);
+  cursor: not-allowed;
+  opacity: 0.5;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
   .form-container {
@@ -432,11 +535,11 @@
   .form-header {
     min-height: 50px;
   }
-  
+
   .form-header .back-icon-button {
     padding: 6px;
   }
-  
+
   .form-header .back-icon-img {
     width: 28px;
     height: 28px;
@@ -454,15 +557,23 @@
   .form-group.half {
     width: 100%;
   }
-  
-  .avatar-selection {
+
+  .avatar-grid {
     gap: 0.8rem;
   }
-  
-  .avatar-btn {
-    width: 60px;
-    height: 60px;
-    font-size: 1.8rem;
+
+  .avatar-option img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .members-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .member-avatar {
+    width: 70px;
+    height: 70px;
   }
 }
 
@@ -474,11 +585,11 @@
   .form-header {
     min-height: 45px;
   }
-  
+
   .form-header .back-icon-button {
     padding: 5px;
   }
-  
+
   .form-header .back-icon-img {
     width: 24px;
     height: 24px;
@@ -489,8 +600,21 @@
     padding: 0 40px;
     -webkit-text-stroke: 1.5px #000;
   }
-  
+
   .section-title {
     font-size: 1.2rem;
+  }
+
+  .avatar-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .avatar-option img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .members-grid {
+    grid-template-columns: 1fr;
   }
 }

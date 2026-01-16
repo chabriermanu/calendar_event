@@ -1,0 +1,569 @@
+/* ===================================
+   PAGE DE SÉLECTION DE PROFILS
+   Style cohérent avec la page d'accueil
+   =================================== */
+
+.select-profile-container {
+  position: relative;
+  min-height: 100vh;
+  background-image: url('/images/pngtree-holiday-christmas-background-with-christmas-village-and-winter-landscape-vector-image_15503030.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Étoiles scintillantes (comme sur la page d'accueil) */
+.select-profile-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent);
+  background-size: 200px 200px;
+  animation: twinkle 3s ease-in-out infinite;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* Header avec titre */
+.profile-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header-title {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
+  flex: 1;
+  text-align: center;
+  margin: 0;
+}
+
+/* Bouton retour */
+.back-icon-button {
+  position: absolute;
+  left: 0;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-icon-img {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.back-icon-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Bouton déconnexion */
+.disconnect-button {
+  background: linear-gradient(135deg, #667eea80 0%, #9b51e680 100%);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.disconnect-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.disconnect-button:hover::before {
+  left: 100%;
+}
+
+.disconnect-button:hover {
+  background: linear-gradient(135deg, #667eeab3 0%, #764ba2b3 100%);
+  border-color: #ffffff80;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Contenu principal */
+.profile-content {
+  position: relative;
+  z-index: 5;
+  padding: 3rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Sous-titre */
+.profile-subtitle {
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  -webkit-text-stroke: 2px #000;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Grille de profils */
+.profiles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+/* Carte de profil */
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.profile-card:nth-child(1) { animation-delay: 0.5s; }
+.profile-card:nth-child(2) { animation-delay: 0.6s; }
+.profile-card:nth-child(3) { animation-delay: 0.7s; }
+.profile-card:nth-child(4) { animation-delay: 0.8s; }
+.profile-card:nth-child(5) { animation-delay: 0.9s; }
+.profile-card:nth-child(6) { animation-delay: 1s; }
+
+.profile-card:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+.profile-card:active {
+  transform: translateY(-5px) scale(1.02);
+}
+
+/* Avatar circulaire avec glassmorphism */
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 8px 32px rgba(31, 38, 135, 0.37),
+    inset 0 0 30px rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.5) 0%, 
+    rgba(118, 75, 162, 0.5) 100%
+  );
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.profile-card:hover .profile-avatar {
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 12px 40px rgba(102, 126, 234, 0.6),
+    0 0 50px rgba(118, 75, 162, 0.4),
+    inset 0 0 40px rgba(255, 255, 255, 0.2);
+  transform: rotate(5deg);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Nom du profil */
+.profile-name {
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.8) 0%, 
+    rgba(155, 81, 230, 0.8) 100%
+  );
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 25px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de brillance sur les noms */
+.profile-name::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.profile-card:hover .profile-name::before {
+  left: 100%;
+}
+
+.profile-card:hover .profile-name {
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 1) 0%, 
+    rgba(118, 75, 162, 1) 100%
+  );
+  border-color: #ffffff80;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Message d'erreur */
+.error-message {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(238, 90, 82, 0.4);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* Boutons en bas de page */
+.bottom-actions {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  display: flex;
+  justify-content: space-between;
+  z-index: 50;
+  pointer-events: none;
+  gap: 1rem;
+}
+
+.bottom-actions > * {
+  pointer-events: all;
+}
+
+/* Bouton ajouter profil */
+.add-profile-button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea80 0%, #9b51e680 100%);
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 1s ease-out 1.2s both;
+}
+
+.add-profile-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.add-profile-button:hover::before {
+  left: 100%;
+}
+
+.add-profile-button:hover {
+  background: linear-gradient(135deg, #667eeab3 0%, #764ba2b3 100%);
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.7);
+}
+
+/* Bouton thème */
+.theme-button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea80 0%, #9b51e680 100%);
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  /* Décalé vers le haut pour éviter superposition avec bouton mute */
+  margin-bottom: 80px;
+  animation: fadeInUp 1s ease-out 1.2s both;
+}
+
+.theme-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.theme-button:hover::before {
+  left: 100%;
+}
+
+.theme-button:hover {
+  background: linear-gradient(135deg, #667eeab3 0%, #764ba2b3 100%);
+  transform: scale(1.1) rotate(20deg);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.7);
+}
+
+/* État de chargement */
+.profile-card.loading {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.profile-card.loading .profile-avatar {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .profiles-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .profile-avatar {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profiles-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 0 1rem;
+    margin-bottom: 6rem; /* Espace pour les boutons en dessous */
+  }
+  
+  .profile-avatar {
+    width: 110px;
+    height: 110px;
+  }
+  
+  .profile-name {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.5rem;
+  }
+  
+  .profile-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .header-title {
+    font-size: 1.5rem;
+  }
+  
+  .profile-subtitle {
+    font-size: 1.5rem;
+  }
+  
+  .back-icon-button {
+    padding: 6px;
+  }
+  
+  .back-icon-img {
+    width: 28px;
+    height: 28px;
+  }
+  
+  /* Réorganisation des boutons sur small screen */
+  /* Note: Votre bouton son externe s'alignera automatiquement avec ces boutons */
+  .bottom-actions {
+    bottom: 2rem;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    width: auto;
+  }
+  
+  .add-profile-button,
+  .theme-button {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    margin-bottom: 0; /* Annule le décalage vertical */
+  }
+  
+  /* Le bouton + au centre */
+  .add-profile-button {
+    order: 1;
+  }
+  
+  /* Le bouton thème à droite */
+  .theme-button {
+    order: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .profiles-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .profile-avatar {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .profile-name {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .profile-subtitle {
+    font-size: 1.3rem;
+  }
+
+  .header-title {
+    font-size: 1.2rem;
+  }
+}

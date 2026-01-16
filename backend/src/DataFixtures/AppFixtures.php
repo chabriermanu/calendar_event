@@ -124,7 +124,7 @@ class AppFixtures extends Fixture
                 'pseudo' => 'Khyle',
                 'age' => 4,
                 'role' => 'enfant',
-                'avatar' => 'avatar_khyle.png',
+                'avatar' => 'assets/avatar/avatar_enfant.png',
                 'theme' => 'colorful_village',
                 'roles' => ['ROLE_USER']
             ],
@@ -132,7 +132,7 @@ class AppFixtures extends Fixture
                 'pseudo' => 'Khelyann',
                 'age' => 16,
                 'role' => 'ado',
-                'avatar' => 'avatar_teen1.png',
+                'avatar' => 'assets/avatar/avatar_teen.png',
                 'theme' => 'modern_snow',
                 'roles' => ['ROLE_USER']
             ],
@@ -140,7 +140,7 @@ class AppFixtures extends Fixture
                 'pseudo' => 'Papa',
                 'age' => 45,
                 'role' => 'parent',
-                'avatar' => 'avatar_papa.png',
+                'avatar' => 'assets/avatar/avatar_male.png',
                 'theme' => 'cozy',
                 'roles' => ['ROLE_USER', 'ROLE_ADMIN']
             ],
@@ -148,7 +148,7 @@ class AppFixtures extends Fixture
                 'pseudo' => 'Maman',
                 'age' => 42,
                 'role' => 'parent',
-                'avatar' => 'avatar_maman.png',
+                'avatar' => 'assets/avatar/avatar_female.png',
                 'theme' => 'cozy',
                 'roles' => ['ROLE_USER']
             ],
@@ -156,7 +156,7 @@ class AppFixtures extends Fixture
                 'pseudo' => 'Mamie',
                 'age' => 74,
                 'role' => 'grand_parent',
-                'avatar' => 'avatar_grandparents.png',
+                'avatar' => 'assets/avatar/avatar_grandfather.png',
                 'theme' => 'traditionnel',
                 'roles' => ['ROLE_USER']
             ],
@@ -164,7 +164,7 @@ class AppFixtures extends Fixture
                 'pseudo' => 'Papy',
                 'age' => 76,
                 'role' => 'grand_parent',
-                'avatar' => 'avatar_grandparents.png',
+                'avatar' => 'assets/avatar/avatar_grandmother.png',
                 'theme' => 'traditionnel',
                 'roles' => ['ROLE_USER']
             ],

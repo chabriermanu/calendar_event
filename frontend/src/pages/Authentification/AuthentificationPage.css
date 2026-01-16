@@ -18,22 +18,27 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    radial-gradient(2px 2px at 20% 30%, white, transparent),
+  background-image: radial-gradient(2px 2px at 20% 30%, white, transparent),
     radial-gradient(2px 2px at 60% 70%, white, transparent),
     radial-gradient(1px 1px at 50% 50%, white, transparent),
     radial-gradient(1px 1px at 80% 10%, white, transparent),
     radial-gradient(2px 2px at 90% 60%, white, transparent),
     radial-gradient(1px 1px at 33% 80%, white, transparent);
-  background-size: 200px 200px, 250px 250px, 180px 180px, 220px 220px, 190px 190px, 210px 210px;
+  background-size: 200px 200px, 250px 250px, 180px 180px, 220px 220px,
+    190px 190px, 210px 210px;
   animation: twinkle 3s ease-in-out infinite;
   opacity: 0.5;
   z-index: 1;
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 /* === HEADER AVEC ANIMATION === */
@@ -73,9 +78,7 @@
   margin: 8px 0 0 0;
   font-weight: 600; /* Plus gras */
   -webkit-text-stroke: 2px #000; /* Contour noir épais */
-  text-shadow: 
-    0 0 10px rgba(0, 0, 0, 1),
-    0 3px 8px rgba(0, 0, 0, 0.9); /* Double ombre pour contraste */
+  text-shadow: 0 0 10px rgba(0, 0, 0, 1), 0 3px 8px rgba(0, 0, 0, 0.9); /* Double ombre pour contraste */
   letter-spacing: 0.3px;
 }
 
@@ -149,8 +152,9 @@
 /* === CARTE DE LOGIN GLASSMORPHISM === */
 
 .login-card {
-  background: linear-gradient(135deg, 
-    rgba(102, 126, 234, 0.2) 0%, 
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.2) 0%,
     rgba(118, 75, 162, 0.2) 100%
   );
   backdrop-filter: blur(20px);
@@ -222,7 +226,7 @@
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  color: white;
+  color: black;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -258,9 +262,16 @@
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  75% { transform: translateX(10px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
 }
 
 /* === BOUTON VALIDER GLASSMORPHISM === */
@@ -277,8 +288,9 @@
   text-transform: uppercase;
   border: 2px solid rgba(255, 255, 255, 0.4);
   border-radius: 30px;
-  background: linear-gradient(135deg, 
-    rgba(102, 126, 234, 0.4) 0%, 
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.4) 0%,
     rgba(118, 75, 162, 0.4) 100%
   );
   backdrop-filter: blur(15px);
@@ -314,8 +326,9 @@
 }
 
 .submit-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, 
-    rgba(102, 126, 234, 0.6) 0%, 
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.6) 0%,
     rgba(118, 75, 162, 0.6) 100%
   );
   border-color: rgba(255, 255, 255, 0.6);
@@ -331,8 +344,9 @@
 .submit-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background: linear-gradient(135deg, 
-    rgba(102, 126, 234, 0.2) 0%, 
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.2) 0%,
     rgba(118, 75, 162, 0.2) 100%
   );
 }
@@ -347,42 +361,42 @@
     transform: none;
     padding: 6px;
   }
-  
+
   .back-icon-img {
     width: 32px;
   }
-  
+
   .login-header {
     padding-left: 60px; /* Laisse de l'espace pour le bouton */
   }
-  
-  .login-header h1 { 
-    font-size: 1.5rem; 
+
+  .login-header h1 {
+    font-size: 1.5rem;
     -webkit-text-stroke: 1.5px #000;
   }
-  .login-header p { 
-    font-size: 0.95rem; 
+  .login-header p {
+    font-size: 0.95rem;
   }
-  .login-card { 
-    padding: 35px 30px; 
+  .login-card {
+    padding: 35px 30px;
   }
-  .login-title { 
-    font-size: 1.8rem; 
-    padding: 12px 20px; 
+  .login-title {
+    font-size: 1.8rem;
+    padding: 12px 20px;
   }
-  .login-form h3 { 
-    font-size: 1.4rem; 
+  .login-form h3 {
+    font-size: 1.4rem;
   }
-  .login-form label { 
-    font-size: 1.1rem; 
+  .login-form label {
+    font-size: 1.1rem;
   }
-  .code-input { 
-    font-size: 1.1rem; 
-    padding: 14px 18px; 
+  .code-input {
+    font-size: 1.1rem;
+    padding: 14px 18px;
   }
-  .submit-button { 
-    font-size: 1.1rem; 
-    padding: 14px 25px; 
+  .submit-button {
+    font-size: 1.1rem;
+    padding: 14px 25px;
   }
 }
 
@@ -393,30 +407,30 @@
     top: 15px;
     padding: 5px;
   }
-  
+
   .back-icon-img {
     width: 28px;
   }
-  
-  .login-header { 
+
+  .login-header {
     padding: 20px 15px;
     padding-left: 50px; /* Espace pour le bouton sur petit écran */
   }
-  .login-header h1 { 
-    font-size: 1.2rem; 
+  .login-header h1 {
+    font-size: 1.2rem;
     -webkit-text-stroke: 1px #000;
   }
-  .login-header p { 
-    font-size: 0.85rem; 
+  .login-header p {
+    font-size: 0.85rem;
   }
-  .login-container { 
-    padding: 20px 15px; 
+  .login-container {
+    padding: 20px 15px;
   }
-  .login-card { 
-    padding: 25px 20px; 
+  .login-card {
+    padding: 25px 20px;
   }
-  .login-title { 
-    font-size: 1.5rem; 
-    padding: 10px 15px; 
+  .login-title {
+    font-size: 1.5rem;
+    padding: 10px 15px;
   }
 }
